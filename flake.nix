@@ -6,7 +6,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/master";
     # home manager that follows nixpkgs version 
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # make sure to follow the version of nixpkgs 
+    home-manager.inputs.nixpkgs.follows = "nixpkgs"; 
   };
 
   outputs = { self, nixpkgs, home-manager, ... }:
@@ -19,7 +20,9 @@
 	homeConfigurations = {
 		akbar = home-manager.lib.homeManagerConfiguration {
 			inherit pkgs;
-			modules = [ ./home.nix ];
+			modules = [ 
+				./home.nix
+			 ];
 		};
 	};
   };
