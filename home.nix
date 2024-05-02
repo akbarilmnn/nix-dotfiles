@@ -130,6 +130,15 @@
 		enable = true;
 		syntaxHighlighting.enable = true;
 		autosuggestion.enable = true;	
+		shellAliases = {
+			ls = "eza -l --icons";
+			la = "eza -la --icons";
+			cat = "bat";
+		};
+		initExtra = ''
+			eval "$(fzf --zsh)"
+			eval "$(zoxide init zsh)"
+		'';
 	};
 
 	programs.starship = {
