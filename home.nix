@@ -145,6 +145,18 @@
 		enable = true;
 	};
 
+	# configure OpenSSH for git to use SSH instead of HTTP/HTTPS url.
+
+	services.ssh-agent.enable = true;	
+		
+	programs.ssh = {
+		enable = true;	
+		matchBlocks.akbar = {
+			host = "github.com";
+			identityFile = "~/.ssh/id_ed25519";
+		};
+	};
+
 	programs.bash.enable = true;	 
 
 
