@@ -4,13 +4,18 @@
   inputs = {
     # using the currently up-to-date packages on `nixpkgs`
     nixpkgs.url = "github:nixos/nixpkgs/master";
+
     # home manager that follows nixpkgs version 
     home-manager.url = "github:nix-community/home-manager";
     # make sure to follow the version of nixpkgs 
     home-manager.inputs.nixpkgs.follows = "nixpkgs"; 
+
+    # neovim that can be configured using nix.
+    nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs"; 
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, nixvim, ... }:
 	let 
 		system = "x86_64-linux";
 		pkgs = nixpkgs.legacyPackages.${system};
@@ -22,6 +27,7 @@
 			inherit pkgs;
 			modules = [ 
 				./home.nix
+				nixvim.homeManagerModules.nixvim
 			 ];
 		};
 	};

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixvim, ... }:
 {
 # see mynixos.com to see more configuration options.
 # Home Manager needs a bit of information about you and the paths it should
@@ -123,7 +123,7 @@
 		};
 		extraConfig = {
 			core.editor = "nvim";
-			init.defaultBranch = "master";
+			init.defaultBranch = "main";
 		};
 	};
 
@@ -136,6 +136,7 @@
 			ls = "eza -l --icons";
 			la = "eza -la --icons";
 			cat = "bat";
+			rm = "rip";
 		};
 		initExtra = ''
 			eval "$(fzf --zsh)"
