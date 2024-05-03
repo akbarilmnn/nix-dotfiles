@@ -298,137 +298,222 @@
 			mode = "n";
 			key = "<leader>s";
 			action = "<cmd>w<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>q";
 			action = "<cmd>wq<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>v";
 			action = "<C-v>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>e";
 			action = "<cmd>q!<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>x";
 			action = "<cmd>bdelete!<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>n";
 			action = "<cmd>bNext<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>p";
 			action = "<cmd>bprevious<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "i";
 			key = "jj";
 			action = "<Esc>";
+			options.silent = true;		
 		}
 		{
 			mode = "v";
 			key = "J";
 			action = ":m '>+1<cr>gv=gv";
+			options.silent = true;		
 		}
 		{
 			mode = "v";
 			key = "k";
 			action = ":m '<-2<cr>gv=gv";
+			options.silent = true;		
 		}
 		{
 			mode = "v";
 			key = "<";
 			action = "<gv";
+			options.silent = true;		
 		}
 		{
 			mode = "v";
 			key = ">";
 			action = ">gv";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<C-u>";
 			action = "<C-u>zz";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<C-d>";
 			action = "<C-d>zz";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<C-h>";
 			action = "<cmd>wincmd h<cr>";
+			options.silent = true;		
 		}
 
 		{
 			mode = "n";
 			key = "<C-j>";
 			action = "<cmd>wincmd j<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<C-k>";
 			action = "<cmd>wincmd j<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<C-l>";
 			action = "<cmd>wincmd l<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>ff";
 			action = "<cmd>Telescope find_files<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>fs";
 			action = "<cmd>Telescope live_grep<cr>";
+			options.silent = true;		
 		}
 
 		{
 			mode = "n";
 			key = "<leader>fc";
 			action = "<cmd>Telescope grep_string<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>fb";
 			action = "<cmd>Telescope buffers<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>fg";
 			action = "<cmd>Telescope git_files<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>fk";
 			action = "<cmd>Telescope keymaps<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>to";
 			action = "<cmd>Oil --float<cr>";
+			options.silent = true;		
 		}
 		{
 			mode = "n";
 			key = "<leader>ds";
 			action = "require('notify').dismiss()";
 			lua = true;	
+			options.silent = true;		
 		}
 		];		
+	
+		# plugins 
+		plugins = {
+			# autopairs to make life easier typing brackets.
+			nvim-autopairs.enable = true;
 			
+			# comment easier.
+			comment.enable = true;
+
+			dressing.enable = true;
+
+			todo-comments.enable = true;
+			todo-comments.signs = false;
+		
+			telescope = {
+				enable = true;
+				pickers.find_files.theme = "dropdown";
+			};
+
+			gitsigns.enable = true;
+			treesitter = {
+				enable = true;
+				ensureInstalled = [	
+					"c" 
+				"lua" 
+				"vim" 
+				"vimdoc" 
+				"javascript" 
+				"typescript" 
+				"html" 
+				"css" 
+				"cpp" 
+				"zig" 
+				"rust" 
+				"markdown" 
+				"markdown_inline" 	
+				];
+			};
+			
+			lualine.enable = true;
+			
+			notify.enable = true;
+			oil.enable = true;
+
+			illuminate = {
+				enable = true;
+				underCursor = false;
+				filetypesDenylist = [
+					"DressingSelect" 
+				"Outline" 
+				"TelescopePrompt" 
+				"alpha" 
+				"harpoon" 
+				"toggleterm" 
+				"neo-tree" 
+				"Spectre" 
+				"reason" 
+				];
+			};	
+		};				
 	};		
 	
 	# enable tmux with vi bindings.
