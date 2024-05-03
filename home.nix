@@ -273,7 +273,7 @@
 			completeopt = [ "menuone" "noselect" ];
 		};
 		# colorscheme 
-		colorscheme.gruvbox.enable = true;
+		colorschemes.gruvbox.enable = true;
 	
 		# auto groups 
 		autoGroups = {
@@ -470,7 +470,6 @@
 		
 			telescope = {
 				enable = true;
-				pickers.find_files.theme = "dropdown";
 			};
 
 			gitsigns.enable = true;
@@ -519,7 +518,7 @@
 	# enable tmux with vi bindings.
 	programs.tmux = {
 		enable = true;
-		keyMode = "vi":
+		keyMode = "vi";
 	};
 	
 	programs.bash.enable = true;	 
