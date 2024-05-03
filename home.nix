@@ -215,7 +215,227 @@
 
 			'';
 	};
+
+	# configure neovim with nix.	
+	programs.nixvim = {
+		enable = true;	
+		# global variables = (vim.g.*)
+		globals = {
+			mapleader = " ";
+			maplocalleader = " ";
+		};
+		# options (vim.opt.*)
+		opts = {
+			cursorline = true;
+			# to make the cursor a thick block
+			# guicursor = ""
+			expandtab = true;
+			smarttab = true;
+			shiftwidth = 4;
+			softtabstop = 4;
+			tabstop = 4;
+			mouse = "a";
+			smartindent = true;
+			showmode = false;
+			# because of this when i copy and paste something neovim just automatically indent the way that i dont like
+			autoindent = false;
+
+			swapfile = false;
+			backup = false;
+
+			hlsearch = false;
+			incsearch = true;
+			ignorecase = true;
+			smartcase = true;
+
+			updatetime = 100;
+
+			splitbelow = true;
+			splitright = true;
+			wrap = false;
+			fileencoding = "utf-8";
+			termguicolors = true;
+			hidden = true;
+			number = true;
+			# If i happen to use neovim GUI.
+			# guifont = "iosevka:h17";
+
+			# to make clipboard support possible;
+			clipboard = "unnamedplus";
+			relativenumber = true;
+			list = true;
+			listchars = {
+				tab = "» ";
+				trail = "·";
+				nbsp = "␣"; 
+				eol = "↵";
+			};
+			completeopt = [ "menuone" "noselect" ];
+		};
+		# colorscheme 
+		colorscheme.gruvbox.enable = true;
+	
+		# auto groups 
+		autoGroups = {
+			utils = { clear = true; };
+		};
 		
+		# auto commands 
+		autoCmd = [
+			{
+				# highlight text on yank
+				event = ["TextYankPost"];
+				group = "utils";
+				callback = {
+					__raw = "function() vim.highlight.on_yank() end";
+				};
+			}
+		];	
+	
+		# keymaps 
+		keymaps = [
+		{
+			mode = "n";
+			key = "<leader>s";
+			action = "<cmd>w<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>q";
+			action = "<cmd>wq<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>v";
+			action = "<C-v>";
+		}
+		{
+			mode = "n";
+			key = "<leader>e";
+			action = "<cmd>q!<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>x";
+			action = "<cmd>bdelete!<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>n";
+			action = "<cmd>bNext<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>p";
+			action = "<cmd>bprevious<cr>";
+		}
+		{
+			mode = "i";
+			key = "jj";
+			action = "<Esc>";
+		}
+		{
+			mode = "v";
+			key = "J";
+			action = ":m '>+1<cr>gv=gv";
+		}
+		{
+			mode = "v";
+			key = "k";
+			action = ":m '<-2<cr>gv=gv";
+		}
+		{
+			mode = "v";
+			key = "<";
+			action = "<gv";
+		}
+		{
+			mode = "v";
+			key = ">";
+			action = ">gv";
+		}
+		{
+			mode = "n";
+			key = "<C-u>";
+			action = "<C-u>zz";
+		}
+		{
+			mode = "n";
+			key = "<C-d>";
+			action = "<C-d>zz";
+		}
+		{
+			mode = "n";
+			key = "<C-h>";
+			action = "<cmd>wincmd h<cr>";
+		}
+
+		{
+			mode = "n";
+			key = "<C-j>";
+			action = "<cmd>wincmd j<cr>";
+		}
+		{
+			mode = "n";
+			key = "<C-k>";
+			action = "<cmd>wincmd j<cr>";
+		}
+		{
+			mode = "n";
+			key = "<C-l>";
+			action = "<cmd>wincmd l<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>ff";
+			action = "<cmd>Telescope find_files<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>fs";
+			action = "<cmd>Telescope live_grep<cr>";
+		}
+
+		{
+			mode = "n";
+			key = "<leader>fc";
+			action = "<cmd>Telescope grep_string<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>fb";
+			action = "<cmd>Telescope buffers<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>fg";
+			action = "<cmd>Telescope git_files<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>fk";
+			action = "<cmd>Telescope keymaps<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>to";
+			action = "<cmd>Oil --float<cr>";
+		}
+		{
+			mode = "n";
+			key = "<leader>ds";
+			action = "require('notify').dismiss()";
+			lua = true;	
+		}
+		];		
+			
+	};		
+	
+	# enable tmux with vi bindings.
+	programs.tmux = {
+		enable = true;
+		keyMode = "vi":
+	};
 	
 	programs.bash.enable = true;	 
 
