@@ -1,4 +1,4 @@
-{ config, pkgs, nixvim, ... }:
+{ config, pkgs,  ... }:
 {
 # see mynixos.com to see more configuration options.
 # Home Manager needs a bit of information about you and the paths it should
@@ -62,8 +62,12 @@
 			pkgs.pass
 # process viewer
 			pkgs.procs
+# text editor 
+			pkgs.neovim
 # terminal of choice if i happen to use a linux distro
 			pkgs.wezterm
+# C compiler 
+			pkgs.gcc
 # # It is sometimes useful to fine-tune packages, for example, by applying
 # # overrides. You can do that directly here, just don't forget the
 # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -81,6 +85,8 @@
 # Home Manager is pretty good at managing dotfiles. The primary way to manage
 # plain files is through 'home.file'.
 	home.file = {
+	".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.zshrc";
+	".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/nvim";
 # # Building this configuration will create a copy of 'dotfiles/screenrc' in
 # # the Nix store. Activating the configuration will then make '~/.screenrc' a
 # # symlink to the Nix store copy.
@@ -129,19 +135,7 @@
 
 	# configure zsh shell with desired plugins and aliases.
 	programs.zsh = {
-		enable = true;
-		syntaxHighlighting.enable = true;
-		autosuggestion.enable = true;	
-		shellAliases = {
-			ls = "eza -l --icons";
-			la = "eza -la --icons";
-			cat = "bat";
-			rm = "rip";
-		};
-		initExtra = ''
-			eval "$(fzf --zsh)"
-			eval "$(zoxide init zsh)"
-		'';
+		enable = true;	
 	};
 	
 	# enable starship prompt to make terminal prettier.
@@ -216,304 +210,7 @@
 			'';
 	};
 
-	# configure neovim with nix.	
-	programs.nixvim = {
-		enable = true;	
-		# global variables = (vim.g.*)
-		globals = {
-			mapleader = " ";
-			maplocalleader = " ";
-		};
-		# options (vim.opt.*)
-		opts = {
-			cursorline = true;
-			# to make the cursor a thick block
-			# guicursor = ""
-			expandtab = true;
-			smarttab = true;
-			shiftwidth = 4;
-			softtabstop = 4;
-			tabstop = 4;
-			mouse = "a";
-			smartindent = true;
-			showmode = false;
-			# because of this when i copy and paste something neovim just automatically indent the way that i dont like
-			autoindent = false;
-
-			swapfile = false;
-			backup = false;
-
-			hlsearch = false;
-			incsearch = true;
-			ignorecase = true;
-			smartcase = true;
-
-			updatetime = 100;
-
-			splitbelow = true;
-			splitright = true;
-			wrap = false;
-			fileencoding = "utf-8";
-			termguicolors = true;
-			hidden = true;
-			number = true;
-			# If i happen to use neovim GUI.
-			# guifont = "iosevka:h17";
-
-			# to make clipboard support possible;
-			clipboard = "unnamedplus";
-			relativenumber = true;
-			list = true;
-			listchars = {
-				tab = "» ";
-				trail = "·";
-				nbsp = "␣"; 
-				eol = "↵";
-			};
-			completeopt = [ "menuone" "noselect" ];
-		};
-		# colorscheme 
-		colorschemes.gruvbox.enable = true;
-	
-		# auto groups 
-		autoGroups = {
-			utils = { clear = true; };
-		};
-		
-		# auto commands 
-		autoCmd = [
-			{
-				# highlight text on yank
-				event = ["TextYankPost"];
-				group = "utils";
-				callback = {
-					__raw = "function() vim.highlight.on_yank() end";
-				};
-			}
-		];	
-	
-		# keymaps 
-		keymaps = [
-		{
-			mode = "n";
-			key = "<leader>s";
-			action = "<cmd>w<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>q";
-			action = "<cmd>wq<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>v";
-			action = "<C-v>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>e";
-			action = "<cmd>q!<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>x";
-			action = "<cmd>bdelete!<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>n";
-			action = "<cmd>bNext<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>p";
-			action = "<cmd>bprevious<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "i";
-			key = "jj";
-			action = "<Esc>";
-			options.silent = true;		
-		}
-		{
-			mode = "v";
-			key = "J";
-			action = ":m '>+1<cr>gv=gv";
-			options.silent = true;		
-		}
-		{
-			mode = "v";
-			key = "k";
-			action = ":m '<-2<cr>gv=gv";
-			options.silent = true;		
-		}
-		{
-			mode = "v";
-			key = "<";
-			action = "<gv";
-			options.silent = true;		
-		}
-		{
-			mode = "v";
-			key = ">";
-			action = ">gv";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<C-u>";
-			action = "<C-u>zz";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<C-d>";
-			action = "<C-d>zz";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<C-h>";
-			action = "<cmd>wincmd h<cr>";
-			options.silent = true;		
-		}
-
-		{
-			mode = "n";
-			key = "<C-j>";
-			action = "<cmd>wincmd j<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<C-k>";
-			action = "<cmd>wincmd j<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<C-l>";
-			action = "<cmd>wincmd l<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>ff";
-			action = "<cmd>Telescope find_files<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>fs";
-			action = "<cmd>Telescope live_grep<cr>";
-			options.silent = true;		
-		}
-
-		{
-			mode = "n";
-			key = "<leader>fc";
-			action = "<cmd>Telescope grep_string<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>fb";
-			action = "<cmd>Telescope buffers<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>fg";
-			action = "<cmd>Telescope git_files<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>fk";
-			action = "<cmd>Telescope keymaps<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>to";
-			action = "<cmd>Oil --float<cr>";
-			options.silent = true;		
-		}
-		{
-			mode = "n";
-			key = "<leader>ds";
-			action = "require('notify').dismiss()";
-			lua = true;	
-			options.silent = true;		
-		}
-		];		
-	
-		# plugins 
-		plugins = {
-			# autopairs to make life easier typing brackets.
-			nvim-autopairs.enable = true;
 			
-			# comment easier.
-			comment.enable = true;
-
-			dressing.enable = true;
-
-			todo-comments.enable = true;
-			todo-comments.signs = false;
-		
-			telescope = {
-				enable = true;
-			};
-
-			gitsigns.enable = true;
-			treesitter = {
-				enable = true;
-				ensureInstalled = [	
-					"c" 
-				"lua" 
-				"vim" 
-				"vimdoc" 
-				"javascript" 
-				"typescript" 
-				"html" 
-				"css" 
-				"cpp" 
-				"zig" 
-				"rust" 
-				"markdown" 
-				"markdown_inline" 	
-				];
-			};
-			
-			lualine.enable = true;
-			
-			notify.enable = true;
-			oil.enable = true;
-
-			illuminate = {
-				enable = true;
-				underCursor = false;
-				filetypesDenylist = [
-					"DressingSelect" 
-				"Outline" 
-				"TelescopePrompt" 
-				"alpha" 
-				"harpoon" 
-				"toggleterm" 
-				"neo-tree" 
-				"Spectre" 
-				"reason" 
-				];
-			};	
-		};				
-	};		
 	
 	# enable tmux with vi bindings.
 	programs.tmux = {
@@ -521,7 +218,6 @@
 		keyMode = "vi";
 	};
 	
-	programs.bash.enable = true;	 
 
 
 
