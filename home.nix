@@ -25,8 +25,8 @@
 			pkgs.git
 # bash replacement 
 			pkgs.zsh
-# for prettier prompt
-			pkgs.starship
+# for prettier prompt (disabled for as long as i use powerlevel10k)
+			# pkgs.starship
 # disk usage in rust
 			pkgs.du-dust
 # rusty `grep`
@@ -68,6 +68,9 @@
 			pkgs.wezterm
 # C compiler 
 			pkgs.gcc
+# unzip tarballs (idk why WSL Ubuntu doesn't have this by default)
+			pkgs.unzip
+
 # # It is sometimes useful to fine-tune packages, for example, by applying
 # # overrides. You can do that directly here, just don't forget the
 # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -88,6 +91,7 @@
 	".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.zshrc";
 	".zshenv".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.zshenv";
 	".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/nvim";
+	".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.vimrc";
 # # Building this configuration will create a copy of 'dotfiles/screenrc' in
 # # the Nix store. Activating the configuration will then make '~/.screenrc' a
 # # symlink to the Nix store copy.
@@ -140,9 +144,10 @@
 	};
 	
 	# enable starship prompt to make terminal prettier.
-	programs.starship = {
-		enable = true;
-	};
+	# sometimes i'd like to change to powerlevel10k
+	# programs.starship = {
+	#	enable = true;
+	# };
 
 	# configure OpenSSH for git to use SSH instead of HTTP/HTTPS url.
 	services.ssh-agent.enable = true;	
