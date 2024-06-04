@@ -35,7 +35,8 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # a more complete vim keybindings 
-zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+# zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+
 
 # if you want the cursor to be a block rather than a beam
 #ZVM_CURSOR_STYLE_ENABLED=false
@@ -50,7 +51,7 @@ autoload -Uz compinit
 compinit
 
 # vi or vim keybindings
-# bindkey -v
+bindkey -v
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

@@ -156,7 +156,7 @@
 		enable = true;	
 		matchBlocks.akbar = {
 			host = "github.com";
-			identityFile = "~/.ssh/id_ed25519";
+			identityFile = "~/.ssh/id_rsa";
 		};
 	};
 	
