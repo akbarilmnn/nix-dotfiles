@@ -15,8 +15,6 @@ if [[ ! -d "$ZINIT_HOME" ]] then
 	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
-export PATH="$PATH:$HOME/.zig/bin"
-
 # startup scripts
 # because i currently use powerlevel10k
 # eval "$(starship init zsh)"
@@ -27,6 +25,9 @@ eval "$(zoxide init zsh)"
 alias la='eza -la --icons'
 alias ls='eza -l --icons'
 alias rm='rip'
+
+# additional binary paths 
+export PATH="$PATH:$HOME/.zig/bin"
 
 # source the plugins 
 source "${ZINIT_HOME}/zinit.zsh"

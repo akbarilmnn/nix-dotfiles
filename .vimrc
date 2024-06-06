@@ -82,13 +82,16 @@ hi Tooltip	guibg=red
 let mapleader = " "
 
 
-
 " set relative line number
 set nu 
 set rnu
+
+set listchars=eol:󰘌,tab:\ \ 
+set list
 
 " set some essential keybindings 
 inoremap jj <Esc>
 
 nnoremap <leader>s <CMD>w<CR>
-nnoremap <leader>q <CMD>q<CR>
+nnoremap <leader>q <CMD>wq<CR>
+nnoremap <leader>e <CMD>q!<CR>
