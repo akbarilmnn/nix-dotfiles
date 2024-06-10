@@ -92,6 +92,7 @@
 	".zshenv".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.zshenv";
 	".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/nvim";
 	".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.vimrc";
+	".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.tmux.conf";
 # # Building this configuration will create a copy of 'dotfiles/screenrc' in
 # # the Nix store. Activating the configuration will then make '~/.screenrc' a
 # # symlink to the Nix store copy.
@@ -217,15 +218,7 @@
 	};
 
 			
-	
-	# enable tmux with vi bindings.
-	programs.tmux = {
-		enable = true;
-		keyMode = "vi";
-		terminal = "screen-256color";
-	};
-	
-
+		
 
 
 # Let Home Manager install and manage itself.
