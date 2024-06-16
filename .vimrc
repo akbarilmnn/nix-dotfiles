@@ -83,11 +83,11 @@ let mapleader = " "
 
 
 " set relative line number
-set nu 
+set nu
 set rnu
 
-set listchars=eol:󰘌,tab:\ \ 
 set list
+set listchars=eol:↵,tab:\ \ 
 
 " set some essential keybindings 
 inoremap jj <Esc>

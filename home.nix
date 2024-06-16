@@ -70,6 +70,12 @@
 			pkgs.gcc
 # unzip tarballs (idk why WSL Ubuntu doesn't have this by default)
 			pkgs.unzip
+# command runners
+			pkgs.just
+			pkgs.cmake
+			pkgs.gnumake
+# event notify test runners
+			pkgs.entr
 
 # # It is sometimes useful to fine-tune packages, for example, by applying
 # # overrides. You can do that directly here, just don't forget the
