@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # where all my plugins live
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
@@ -25,15 +18,18 @@ eval "$(zoxide init zsh)"
 alias la='eza -la --icons'
 alias ls='eza -l --icons'
 alias rm='rip'
+alias cat='bat'
 
 # additional binary paths 
 export PATH="$PATH:$HOME/.zig/bin"
+export PATH="$PATH:$HOME/.omp"
 
+alias omp='oh-my-posh'
+
+# initialize oh-my-posh
+eval "$(oh-my-posh init zsh --config $HOME/ompconfig.toml)"
 # source the plugins 
 source "${ZINIT_HOME}/zinit.zsh"
-
-# prettier prompt
-zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # a more complete vim keybindings 
 # zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
@@ -46,16 +42,12 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
-
 # Load and initialise completion system
 autoload -Uz compinit
 compinit
 
 # vi or vim keybindings
 bindkey -v
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # set history size and set how much lines of command the history file i wanted to save
 HISTSIZE=3500

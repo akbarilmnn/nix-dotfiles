@@ -1,0 +1,3 @@
+return {
+    "makerj/vim-pdf",
+}

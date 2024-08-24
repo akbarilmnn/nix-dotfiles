@@ -76,6 +76,10 @@
 			pkgs.gnumake
 # event notify test runners
 			pkgs.entr
+# pdf utilities 
+            pkgs.poppler_utils
+# download files from google drive (curl and wget fails to do this)
+            pkgs.gdown
 
 # # It is sometimes useful to fine-tune packages, for example, by applying
 # # overrides. You can do that directly here, just don't forget the
@@ -99,6 +103,7 @@
 	".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/nvim";
 	".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.vimrc";
 	".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.tmux.conf";
+	"ompconfig.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/ompconfig.toml";
 # # Building this configuration will create a copy of 'dotfiles/screenrc' in
 # # the Nix store. Activating the configuration will then make '~/.screenrc' a
 # # symlink to the Nix store copy.
@@ -170,57 +175,7 @@
 	# configure wezterm.
 	programs.wezterm = {
 		enable = true;
-		extraConfig = ''
-			local wezterm = require("wezterm")
-
-			local config = {}
-
-		if wezterm.config_builder then
-			config = wezterm.config_builder()
-				end
-
-				-- sets the colorscheme of wezterm
-				config.color_scheme = "Gruvbox dark, hard (base16)"
-
-				-- sets font of wezterm
-				-- available in my system
-				-- JetBrainsMono Nerd Font
-				-- FiraCode Nerd Font
-				-- Symbols Nerd Font
-				-- config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Bold", italic = false })
-				config.font = wezterm.font_with_fallback({
-						{
-						family = "JetBrainsMono Nerd Font",
-						weight = "Bold",
-						italic = false,
-						},
-						"Symbols Nerd Font",
-						})
-		config.font_size = 12.75
-			-- disable tabs & scrollbar
-			config.enable_tab_bar = false
-			config.enable_scroll_bar = false
-
-			-- make wezterm load Ubuntu WSL terminal rather than windows powershell terminal (recommended if using WSL)
-			-- config.default_domain = "WSL:Ubuntu"
-
-			-- sets the transparecy.
-			config.window_background_opacity = 0.85
-
-			-- sets prompt to have no padding.
-			config.window_padding = {
-				left = 0,
-				right = 0,
-				top = 0,
-				bottom = 0,
-			}
-
-		-- disables the beeping noises
-			config.audible_bell = "Disabled"
-
-			return config
-
-			'';
+        extraConfig = builtins.toString ./wezterm.lua;
 	};
 
 			
