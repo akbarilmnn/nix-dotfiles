@@ -1,5 +1,7 @@
 # a more organized dotfiles
 
+always WIP
+
 # Dependencies 
 -   [nix](https://nixos.org/download)
 -   [home-manager](https://nix-community.github.io/home-manager)

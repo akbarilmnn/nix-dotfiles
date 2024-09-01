@@ -80,6 +80,8 @@
             pkgs.poppler_utils
 # download files from google drive (curl and wget fails to do this)
             pkgs.gdown
+# terminal file manager 
+            pkgs.yazi
 
 # # It is sometimes useful to fine-tune packages, for example, by applying
 # # overrides. You can do that directly here, just don't forget the
@@ -98,12 +100,14 @@
 # Home Manager is pretty good at managing dotfiles. The primary way to manage
 # plain files is through 'home.file'.
 	home.file = {
-	".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.zshrc";
-	".zshenv".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.zshenv";
-	".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/nvim";
-	".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.vimrc";
-	".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/.tmux.conf";
-	"ompconfig.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-dotfiles/ompconfig.toml";
+	".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.zshrc";
+	".zshenv".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.zshenv";
+	".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/nvim";
+	".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.vimrc";
+	".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.tmux.conf";
+	".config/yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/yazi";
+	"ompconfig.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/ompconfig.toml";
+	".config/wezterm/wezterm.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/wezterm.lua";
 # # Building this configuration will create a copy of 'dotfiles/screenrc' in
 # # the Nix store. Activating the configuration will then make '~/.screenrc' a
 # # symlink to the Nix store copy.
@@ -164,19 +168,8 @@
 	# configure OpenSSH for git to use SSH instead of HTTP/HTTPS url.
 	services.ssh-agent.enable = true;	
 		
-	programs.ssh = {
-		enable = true;	
-		matchBlocks.akbar = {
-			host = "github.com";
-			identityFile = "~/.ssh/id_rsa";
-		};
-	};
 	
-	# configure wezterm.
-	programs.wezterm = {
-		enable = true;
-        extraConfig = builtins.toString ./wezterm.lua;
-	};
+	
 
 			
 		

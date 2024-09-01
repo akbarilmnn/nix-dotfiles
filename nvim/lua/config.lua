@@ -15,6 +15,7 @@ vim.opt.completeopt = { "menuone", "noselect", "menu" }
 
 local options = {
     cursorline = true,
+    cursorlineopt = 'number',
     -- to make the cursor a thick block
     -- guicursor = ""
     expandtab = true,
@@ -57,7 +58,7 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣", eol = "↵" }
 
 
 -- remove carriage return character (this is handy because i use wsl)
-vim.api.nvim_buf_create_user_command(0, "Rmcrlf", function(_)
+vim.api.nvim_create_user_command("Rmcrlf", function(_)
     vim.cmd([[%s/\r/ /g ]])
 end, {})
 
