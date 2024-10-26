@@ -79,6 +79,9 @@ hi Ignore	guifg=bg ctermfg=bg
 
 hi Tooltip	guibg=red
 
+" set background to transparent
+hi Normal guibg=NONE ctermbg=NONE
+
 let mapleader = " "
 
 

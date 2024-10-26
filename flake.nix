@@ -20,7 +20,8 @@
 	 {
 	# configurations for home-manager 
 	homeConfigurations = {
-		akbar = home-manager.lib.homeManagerConfiguration {
+		# user's home-manager configuration
+		serein = home-manager.lib.homeManagerConfiguration {
 			inherit pkgs;
 			modules = [ 
 				./home.nix

@@ -1,4 +1,6 @@
-# where all my plugins live
+
+## Zinit package manager setup ##
+
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 if [[ ! -d "$ZINIT_HOME" ]] then
@@ -8,46 +10,61 @@ if [[ ! -d "$ZINIT_HOME" ]] then
 	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
-# startup scripts
-# because i currently use powerlevel10k
-# eval "$(starship init zsh)"
-eval "$(fzf --zsh)"
-eval "$(zoxide init zsh)"
-
-# Alias
-alias la='eza -la --icons'
-alias ls='eza -l --icons'
-alias rm='rip'
-alias cat='bat'
-
-# additional binary paths 
-export PATH="$PATH:$HOME/.zig/bin"
-export PATH="$PATH:$HOME/.omp"
-
-alias omp='oh-my-posh'
-
-# initialize oh-my-posh
-eval "$(oh-my-posh init zsh --config $HOME/ompconfig.toml)"
 # source the plugins 
 source "${ZINIT_HOME}/zinit.zsh"
 
-# a more complete vim keybindings 
-# zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
 
-
-# if you want the cursor to be a block rather than a beam
-#ZVM_CURSOR_STYLE_ENABLED=false
+### Plugins downloaded by `zinit` ###
+# a more complete vim keybindings in zsh or use simple vim keybidnings with `bindkey -v`
+zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+ZVM_CURSOR_STYLE_ENABLED=false
 
 # essential plugins for any shell IMO.
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
-# Load and initialise completion system
-autoload -Uz compinit
-compinit
 
-# vi or vim keybindings
-bindkey -v
+# cool fzf-tab preview 
+zinit light Aloxaf/fzf-tab
+
+# Load and initialise completion system
+autoload -U compinit && compinit
+
+
+### Plugins downloaded by `zinit` ###
+
+## Zinit package manager setup ##
+
+
+## common aliases ##
+alias la='eza -la --icons --tree --level 1'
+alias ls='eza -l --icons --tree --level 1'
+alias rm='rip'
+alias cat='bat'
+alias omp='oh-my-posh'
+## common aliases ##
+
+## additional binary paths ##
+export PATH="$PATH:$HOME/.zig/bin"
+export PATH="$PATH:$HOME/.omp"
+## additional binary paths ##
+
+
+## additional help env vars for interacting with windows (host machine) ##
+export WINDIR="/mnt/c"
+export WINUSERDIR="$WINDIR/Users/akbar"
+export WALLPAPERDIR="$WINUSERDIR/Pictures/wallpapers"
+## additional help env vars for interacting with windows (host machine) ##
+
+## startup scripts ##
+eval "$(fzf --zsh)"
+eval "$(zoxide init zsh)"
+# initializes oh my posh with configuration specified by path.
+eval "$(oh-my-posh init zsh --config $HOME/ompconfig.toml)"
+## startup scripts ##
+
+# if you want the cursor to be a block rather than a beam
+#ZVM_CURSOR_STYLE_ENABLED=false
 
 # set history size and set how much lines of command the history file i wanted to save
 HISTSIZE=3500
@@ -66,3 +83,19 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
+
+## additional completion configuraiton ##
+# make completions case-insensitive.
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# make completions has colors.
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+
+ 
+## additional completion configuraiton ##
+
+

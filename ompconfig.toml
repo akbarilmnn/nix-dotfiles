@@ -8,17 +8,27 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
-  newline = true
+  newline = false
+
+  [[blocks.segments]]
+    type = 'session'
+    style = 'plain'
+    template = '{{ if .SSHSession }}<#d45a8f> </>{{ end }}<green> $</><green>[</><#ffa700>{{ .UserName }}</><#ff0000>@</><#4cb8f5>{{ .HostName }}</><green>]</> '
 
   [[blocks.segments]]
     type = 'path'
-    style = 'plain'
+    style = 'powerline'
     background = 'transparent'
-    foreground = 'blue'
-    template = '{{ .Path }}'
+    foreground = '#eb8cbb'
+    template = '{{.Path}}'
 
     [blocks.segments.properties]
       style = 'full'
+# if you want to change separator icon
+      # folder_separator_icon = "  "
+   
+   [transient_prompt]
+   template = '❯ '
 
   [[blocks.segments]]
     type = 'git'
@@ -46,6 +56,8 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     [blocks.segments.properties]
       threshold = 5000
 
+
+# uncomment to enable newline prompt
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
@@ -56,20 +68,21 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     style = 'plain'
     foreground_templates = [
       "{{if gt .Code 0}}red{{end}}",
-      "{{if eq .Code 0}}magenta{{end}}",
+      "{{if eq .Code 0}}green{{end}}",
     ]
     background = 'transparent'
     template = '❯'
 
-[transient_prompt]
-  foreground_templates = [
-    "{{if gt .Code 0}}red{{end}}",
-    "{{if eq .Code 0}}magenta{{end}}",
-  ]
-  background = 'transparent'
-  template = '❯ '
-
-[secondary_prompt]
-  foreground = 'magenta'
-  background = 'transparent'
-  template = '❯❯ '
+#[transient_prompt]
+#  foreground_templates = [
+#    "{{if gt .Code 0}}red{{end}}",
+#    "{{if eq .Code 0}}magenta{{end}}",
+#  ]
+#  background = 'transparent'
+#  template = '❯ '
+# 
+#
+#[secondary_prompt]
+#  foreground = 'magenta'
+#  background = 'transparent'
+#  template = '❯❯ '

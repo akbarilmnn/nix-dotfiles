@@ -3,8 +3,8 @@
 # see mynixos.com to see more configuration options.
 # Home Manager needs a bit of information about you and the paths it should
 # manage.
-	home.username = "akbar";
-	home.homeDirectory = "/home/akbar"; 
+	home.username = "serein";
+	home.homeDirectory = "/home/serein"; 
 
 # This value determines the Home Manager release that your configuration is
 # compatible with. This helps avoid breakage when a new Home Manager release
@@ -65,7 +65,8 @@
 # text editor 
 			pkgs.neovim
 # terminal of choice if i happen to use a linux distro
-			pkgs.wezterm
+			# outdated, rather build from .deb files
+			# pkgs.wezterm
 # C compiler 
 			pkgs.gcc
 # unzip tarballs (idk why WSL Ubuntu doesn't have this by default)
@@ -160,7 +161,7 @@
 	};
 	
 	# enable starship prompt to make terminal prettier.
-	# sometimes i'd like to change to powerlevel10k
+	# sometimes i'd like to change to oh-my-posh
 	# programs.starship = {
 	#	enable = true;
 	# };
