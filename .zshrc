@@ -40,15 +40,32 @@ autoload -U compinit && compinit
 alias la='eza -la --icons --tree --level 1'
 alias ls='eza -l --icons --tree --level 1'
 alias rm='rip'
+alias remove='rip -i'
+alias restore='rip --seance | fzf | xargs -I {} rip --unbury {}'
+alias ripbin='rip --seance | bat'
 alias cat='bat'
 alias omp='oh-my-posh'
+alias neofetch='macchina'
 ## common aliases ##
 
 ## additional binary paths ##
-export PATH="$PATH:$HOME/.zig/bin"
-export PATH="$PATH:$HOME/.omp"
+export OPT_BINS="$HOME/.local/bin"
+# path to zig 
+export PATH="$PATH:$OPT_BINS/zig/bin"
+# path to Go
+export GOPATH="$OPT_BINS/go"
+export PATH="$PATH:$GOPATH/bin"
+# path to oh-my-posh
+export PATH="$PATH:$OPT_BINS/omp"
+# path to Deno 
+export DENO_INSTALL="$OPT_BINS/deno"
+export PATH="$PATH:$DENO_INSTALL/bin"
+
 ## additional binary paths ##
 
+## additional env vars 
+export EDITOR="vim"
+## additional env vars 
 
 ## additional help env vars for interacting with windows (host machine) ##
 export WINDIR="/mnt/c"
@@ -91,11 +108,29 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
-
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls $realpath'
  
 ## additional completion configuraiton ##
 
+## yazi configuration 
+function yz() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -- "$tmp"
+}
+## yazi configuration
 
+# rip configuration 
+function restoreall() {
+	local graveyard_files=$(rip --seance >> graveyard_files)
+	cat graveyard_files	
+
+	echo "Would you like to restore all of your deleted files? [y/n]\0"
+	read confirmation		
+
+	echo "You answer is $confirmation"
+}

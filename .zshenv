@@ -3,7 +3,10 @@
 
 # Only source this once
 if [[ -z "$__HM_ZSH_SESS_VARS_SOURCED" ]]; then
-  export __HM_ZSH_SESS_VARS_SOURCED=1
-  
+  export __HM_ZSH_SESS_VARS_SOURCED=1 
 fi
+
+## add more configuration 
+## add more configuration 
+
 . "$HOME/.cargo/env"

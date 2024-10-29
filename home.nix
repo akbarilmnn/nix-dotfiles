@@ -46,7 +46,7 @@
 # terminal multiplexer 
 			pkgs.tmux 
 # js runtime 
-			pkgs.nodejs_18
+			# pkgs.nodejs_18
 # misc
 # resource monitor
 			pkgs.btop
@@ -83,6 +83,13 @@
             pkgs.gdown
 # terminal file manager 
             pkgs.yazi
+# prettier git diff
+	    pkgs.delta
+# git TUI 
+	    pkgs.lazygit
+# music video player in terminal (although kind of out dated)
+	    pkgs.mpv
+	    
 
 # # It is sometimes useful to fine-tune packages, for example, by applying
 # # overrides. You can do that directly here, just don't forget the
@@ -109,6 +116,7 @@
 	".config/yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/yazi";
 	"ompconfig.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/ompconfig.toml";
 	".config/wezterm/wezterm.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/wezterm.lua";
+	".config/git/config".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/git/config";
 # # Building this configuration will create a copy of 'dotfiles/screenrc' in
 # # the Nix store. Activating the configuration will then make '~/.screenrc' a
 # # symlink to the Nix store copy.
@@ -142,39 +150,15 @@
 	};
 
 	# configure git with desired aliases and configurations.	
-	programs.git = {
-		enable = true;
-		userName = "akbar";
-		userEmail = "akbarsmp27@gmail.com";
-		aliases = {
-			history = "log --oneline --graph --decorate";
-		};
-		extraConfig = {
-			core.editor = "nvim";
-			init.defaultBranch = "main";
-		};
-	};
+	# change git config by creating config file in ~/.config/git/ rather than declaratively configure it.	
 
 	# configure zsh shell with desired plugins and aliases.
 	programs.zsh = {
 		enable = true;	
-	};
-	
-	# enable starship prompt to make terminal prettier.
-	# sometimes i'd like to change to oh-my-posh
-	# programs.starship = {
-	#	enable = true;
-	# };
+	};	
 
 	# configure OpenSSH for git to use SSH instead of HTTP/HTTPS url.
 	services.ssh-agent.enable = true;	
-		
-	
-	
-
-			
-		
-
 
 # Let Home Manager install and manage itself.
 	programs.home-manager.enable = true;
