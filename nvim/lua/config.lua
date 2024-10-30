@@ -48,8 +48,8 @@ local options = {
     number = true,
     guifont = "iosevka:h17",
 
-    -- to make clipboard support possible,
-    clipboard = "unnamedplus",
+    -- to make clipboard support possible (turns out i have to disable this in WSL2) see `:help cliboard.provider`
+    -- clipboard = "unnamedplus",
 }
 
 vim.wo.relativenumber = true

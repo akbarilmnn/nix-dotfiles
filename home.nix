@@ -46,7 +46,7 @@
 # terminal multiplexer 
 			pkgs.tmux 
 # js runtime 
-			# pkgs.nodejs_18
+			pkgs.nodejs_18
 # misc
 # resource monitor
 			pkgs.btop
@@ -87,8 +87,10 @@
 	    pkgs.delta
 # git TUI 
 	    pkgs.lazygit
-# music video player in terminal (although kind of out dated)
-	    pkgs.mpv
+# cool terminal messages 
+	    pkgs.figlet
+# make the cool terminal messages colorful
+	    pkgs.lolcat
 	    
 
 # # It is sometimes useful to fine-tune packages, for example, by applying

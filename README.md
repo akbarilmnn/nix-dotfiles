@@ -71,7 +71,7 @@ git clone https://github.com/akbarilmnn/nix-dotfiles.git env/
 # go to env 
 cd env/
 # home-manager setup
-# home-manager switch --flake .
+home-manager switch --flake .
 ```
 
 close your shell and you are done.

@@ -59,6 +59,7 @@ export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:$OPT_BINS/omp"
 # path to Deno 
 export DENO_INSTALL="$OPT_BINS/deno"
+export DENO_INSTALL_ROOT="$DENO_INSTALL/bin"
 export PATH="$PATH:$DENO_INSTALL/bin"
 
 ## additional binary paths ##
