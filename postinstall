@@ -1,0 +1,347 @@
+#!/bin/bash
+
+set -e 
+### utilities function start ###
+
+# ////////////////////////////////////
+# // 	 utilities functions	    //
+# ////////////////////////////////////
+
+
+check_deps () {
+	for dep in "$@"; 
+	do 
+		if ! command -v $dep 2>&1 >/dev/null ;then
+			echo "INFO: $dep is not installed!"
+			echo "INFO: please install $dep before continue any further."
+			exit 1
+		else 
+			echo "INFO: $dep is installed! (continue)"
+		fi	
+	done
+}
+
+# it is important no to add exit at the end, because it doens't just exit the function (logger) itself, the function outside the logger function can exit as well!
+logger () {
+	gum log -l "$1" "$2"
+}
+
+logger_with_time () {
+	gum log -l "$1" -t "$2" "$3" 
+}
+
+## param 1: url
+## param 2: installation prefix 
+download_archive () {
+	url="$1"	
+	installation_prefix="$2"
+	
+	if gum spin -s globe --title "Downloading archive" -- wget -P $installation_prefix $url ; then
+		logger info "Successfully download archive!"	
+		else 	
+		logger error "Something has gone wrong, could not download archive."
+		exit 1
+	fi	
+}
+
+## param 1: archive_file
+## param 2: extraction prefix 
+extract_archive () {
+	archive_file="$1"	
+	extraction_prefix="$2"
+	
+	if gum spin -s points --title "Extracting archive" -- tar xf $archive_file --directory="$extraction_prefix" ; then
+		logger info "Successfully download archive!"	
+		else 
+		logger error "Something has gone wrong, could not extract archive."
+		exit 1
+	fi	
+}
+
+## param 1: archive_file
+## param 2: extraction prefix 
+extract_archive_zip () {
+	archive_file="$1"	
+	extraction_prefix="$2"
+	
+	if gum spin -s points --title "Extracting archive" -- unzip "$archive_file" -d "$extraction_prefix" ; then
+		logger info "Successfully download archive!"	
+		else 
+		logger error "Something has gone wrong, could not extract archive."
+		exit 1
+	fi	
+}
+
+
+## param 1: current user shell
+## param 2: strings to add into the shell config file.
+add_to_path () {
+	curr_shell=$1
+	add_strings=$2
+	
+	case $curr_shell in
+		bash)
+			logger info "Adding to path..."
+			echo "$add_strings" >> $HOME/.bashrc
+		;;
+		zsh)
+			logger info "Adding to path..."
+			echo "$add_strings" >> $HOME/.zshrc
+		;;
+		*)
+			logger error "$curr_shell is not supported yet!"		
+			exit 1
+		;;	 
+	esac
+	
+}
+
+# ////////////////////////////////////
+# // 	 utilities functions	    //
+# ////////////////////////////////////
+
+# ////////////////////////////////////
+# // 	 installer functions	    //
+# ////////////////////////////////////
+
+## param 1: OS 
+## param 2: architecture 
+## param 3: program version
+## param 4: installation prefix
+install_go () {		
+	logger info "Installing Go..."
+
+	os="$1"
+	architecture="$2"
+	go_version="$3"	
+	install_prefix="$4"
+	archive_file="go$go_version.$os-$architecture.tar.gz"
+	tar_url="https://go.dev/dl/$archive_file"		
+	shell="$(basename $SHELL)"
+
+	if [[ "$architecture" == "x86_64" ]]; then 
+		archive_file="go$go_version.$os-amd64.tar.gz"
+		tar_url="https://go.dev/dl/$archive_file"		
+	fi 
+	
+	download_archive "$tar_url" "$install_prefix"	
+	
+	extract_archive "$install_prefix/$archive_file" "$install_prefix"	
+	
+	add_to_path "$shell" "export GOPATH=\"$install_prefix/go/bin\""
+	add_to_path "$shell" "export PATH=\"\$PATH:\$GOPATH\""
+
+}
+
+## param 1: OS 
+## param 2: architecture 
+## param 3: program version
+## param 4: installation prefix
+install_zig () {
+	logger info "Installing Zig..."
+	
+	os="$1"
+	architecture="$2"
+	zig_version="$3"	
+	install_prefix="$4"
+	tar_url="https://ziglang.org/download/$zig_version/zig-$os-$architecture-$zig_version.tar.xz"
+	archive_file="zig-$os-$architecture-$zig_version.tar.xz"		
+	extracted_dir="zig-$os-$architecture-$zig_version"
+	shell="$(basename $SHELL)"
+	
+	download_archive "$tar_url" "$install_prefix"
+	
+	extract_archive "$install_prefix/$archive_file" "$install_prefix"
+
+	# rename extracted tarball into a more simpler directory name.	
+	mv "$install_prefix/$extracted_dir/" "$install_prefix/zig/"
+
+	# move the zig executable into the bin directory
+	mkdir -p "$install_prefix/zig/bin" 
+	mv "$install_prefix/zig/zig" "$install_prefix/zig/bin"
+
+	# add to path
+	add_to_path "$shell" "export PATH=\"\$PATH:$install_prefix/zig/bin\""	
+
+}
+
+## param 1: OS 
+## param 2: architecture 
+## param 3: program version
+## param 4: installation prefix
+install_omp () {
+	logger info "Installing Omp..."
+
+	os="$1"
+	architecture="$2"
+	ompversion="$3"
+	install_prefix="$4"	
+	script_url="https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v$ompversion/posh-$os-$architecture"
+	# rename downloaded archive into a simpler name
+	file_rename="oh-my-posh"
+	shell="$(basename $SHELL)"
+	
+	if [[ "$architecture" == "x86_64" ]]; then 
+		architecture="amd64"
+		script_url="https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v$ompversion/posh-$os-$architecture"
+	fi
+	
+	# download only oh-my-posh script (no themes)	
+	download_archive "$script_url" "$install_prefix"
+
+	# create directory omp directory in bin
+	mkdir -p "$install_prefix/omp/bin"
+	
+	# rename and move oh-my-posh into $install_prefix/omp/bin
+	mv "$install_prefix/posh-$os-$architecture" "$install_prefix/$file_rename"
+	
+	# make the fiel executable	
+	chmod +x "$install_prefix/$file_rename" 
+
+	mv "$install_prefix/$file_rename" "$install_prefix/omp/bin"
+	
+	# make the file executable 
+
+	# add to path	
+	add_to_path "$shell" "export TERM=\"xterm-256color\""		
+	add_to_path "$shell" "export PATH=\"\$PATH:$install_prefix/omp/bin\""	
+	add_to_path "$shell" "eval \"\$(oh-my-posh init "$shell")\""		
+			
+}
+
+## param 1: architecture 
+## param 2: program version
+## param 3: installation prefix
+install_deno () {
+	logger info "Installing Deno..."
+
+	architecture="$1"
+	deno_version="$2"
+	install_prefix="$3"
+	target=""
+	shell="$(basename $SHELL)"
+
+	# copied from https://deno.land/x/install@v0.3.1/install.sh 
+	case "$architecture" in
+	"Darwin x86_64") target="x86_64-apple-darwin" ;;
+	"Darwin arm64") target="aarch64-apple-darwin" ;;
+	"Linux aarch64") target="aarch64-unknown-linux-gnu" ;;
+	*) target="x86_64-unknown-linux-gnu" ;;
+	esac	
+
+	archive_url="https://dl.deno.land/release/$deno_version/deno-$target.zip"
+	# this will always be the latest deno release.
+
+	# download deno's zip file	
+	download_archive "$archive_url" "$install_prefix"	
+	
+	# extract it 	
+	extract_archive_zip "$install_prefix/deno-$target.zip" "$install_prefix"
+	
+	# make $install_prefix/<program_name>/bin directory so that later can add to path.
+	mkdir -p "$install_prefix/denojs/bin"
+	mv "$install_prefix/deno" "$install_prefix/denojs/bin"
+	
+	add_to_path "$shell" "export PATH=\"\$PATH:$install_prefix/denojs/bin\""
+}
+
+install_rust () {
+	logger info "Installing rust"
+	if ! gum spin -s globe --title "Getting install script" -- curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rust-install.sh ; then
+		logger error "Something wen't wrong, could not download install script."
+		exit 1		
+	fi	
+	logger info "Successfully downloaded install script."
+		logger info "Running install script."
+		
+		chmod +x rust-install.sh	
+		rust-install.sh
+}
+
+# ////////////////////////////////////
+# // 	 installer functions	    //
+# ////////////////////////////////////
+
+
+# ////////////////////////////////////
+# // 	 	entrypoint	    //
+# ////////////////////////////////////
+
+start_setup() {
+	# check for dependencies before we continue.
+	check_deps "wget" "tar" "gum" "xz" "unzip" "curl"
+	# list of chosen elements.
+	local chosen=$(gum choose --limit 4 --header "Choose one or more programs to be installed using this installer!" "Go (language)" "Rust (language)" "Zig (language)" "Deno (js runtime)", "Oh-my-posh (shell prompt)")
+
+	# iterate over chosen element and handles each case.
+	for item in $chosen;
+	do 
+		case $item in
+			Go)
+				# check for dependencies before we continue.
+				os="$(uname | tr '[:upper:]' '[:lower:]')"
+				architecture="$(uname -i)"
+				goversion="$(gum input --placeholder "Which version of Go are you going to install?" --value="1.23.2" )"
+				install_prefix="$(gum input --placeholder "Where you do want Go to be installed?" --value="$HOME/.local/bin" )"
+
+				if [[ -z $goversion || -z $install_prefix ]]; then 
+					logger error "Please fill out the questions!"
+					exit 1
+				else 
+					install_go $os $architecture $goversion $install_prefix
+				fi 
+			
+			;;
+			Rust)
+				install_rust
+			;;
+			Zig)
+				os="$(uname | tr '[:upper:]' '[:lower:]')"
+				architecture="$(uname -i)"
+				zigversion="$(gum input --placeholder "Which version of Zig are you going to install?" --value="0.13.0" )"
+				install_prefix="$(gum input --placeholder "Where you do want Zig to be installed?" --value="$HOME/.local/bin" )"
+			
+				if [[ -z $zigversion || -z $install_prefix ]]; then 
+					logger error "Please fill out the questions!"
+					exit 1
+				else 
+					install_zig $os $architecture $zigversion $install_prefix
+				fi
+
+			;;
+			Deno)
+
+				architecture="$(uname -sm)"
+				default_deno_version="$(curl -s https://dl.deno.land/release-latest.txt)"
+				denoversion="$(gum input --placeholder "Which version of Deno are you going to install?" --value="$default_deno_version" )"
+				install_prefix="$(gum input --placeholder "Where you do want Deno to be installed?" --value="$HOME/.local/bin" )"	
+				
+				install_deno "$architecture" "$denoversion" "$install_prefix"	
+			;;
+			Oh-my-posh)
+				
+				os="$(uname | tr '[:upper:]' '[:lower:]')"
+				architecture="$(uname -i)"
+				ompversion="$(gum input --placeholder "Which version of Oh-my-posh are you going to install?" --value="23.20.3" )"
+			install_prefix="$(gum input --placeholder "Where you do want Oh-my-posh to be installed?" --value="$HOME/.local/bin" )"	
+				if [[-z $zigversion || -z $install_prefix]]; then	
+					logger error "Please fill out the questions!"
+				else
+					install_omp $os $architecture $ompversion $install_prefix
+				fi
+			;;
+			*)
+				logger_with_time info rfc822 "Installation stopped. (completed)."
+				exit 0
+			;;
+		esac
+	done		
+	exit 1
+}
+
+# ////////////////////////////////////
+# // 	 	entrypoint	    //
+# ////////////////////////////////////
+
+
+start_setup

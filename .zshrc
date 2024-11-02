@@ -61,6 +61,8 @@ export PATH="$PATH:$OPT_BINS/omp"
 export DENO_INSTALL="$OPT_BINS/deno"
 export DENO_INSTALL_ROOT="$DENO_INSTALL/bin"
 export PATH="$PATH:$DENO_INSTALL/bin"
+# path to helper scripts 
+export PATH="$PATH:$OPT_BINS/scripts"
 
 ## additional binary paths ##
 

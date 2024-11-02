@@ -91,7 +91,8 @@
 	    pkgs.figlet
 # make the cool terminal messages colorful
 	    pkgs.lolcat
-	    
+# xxd in rust
+	    pkgs.hexyl 
 
 # # It is sometimes useful to fine-tune packages, for example, by applying
 # # overrides. You can do that directly here, just don't forget the
