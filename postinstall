@@ -7,93 +7,128 @@ set -e
 # // 	 utilities functions	    //
 # ////////////////////////////////////
 
-
-check_deps () {
-	for dep in "$@"; 
-	do 
-		if ! command -v $dep 2>&1 >/dev/null ;then
-			echo "INFO: $dep is not installed!"
-			echo "INFO: please install $dep before continue any further."
-			exit 1
-		else 
-			echo "INFO: $dep is installed! (continue)"
-		fi	
-	done
-}
-
-# it is important no to add exit at the end, because it doens't just exit the function (logger) itself, the function outside the logger function can exit as well!
+# helper function checks the commands needed for an installer to run
 logger () {
-	gum log -l "$1" "$2"
+	gum log -l "$1" "$(gum format -t emoji $2)"
 }
 
-logger_with_time () {
-	gum log -l "$1" -t "$2" "$3" 
+depends_on () {
+	logger info "Checking for dependencies 📦"
+	for dep in "$@" 
+	do	
+		if ! command -v $dep 2>&1 > /dev/null ; then
+			logger error "$dep is not found :x: make sure it is installed or add to \$PATH"
+			exit 1
+		fi
+		logger info "$dep found :white_check_mark:"
+	done			
+	logger info "Checking complete :white_check_mark:"
 }
 
-## param 1: url
-## param 2: installation prefix 
-download_archive () {
-	url="$1"	
-	installation_prefix="$2"
-	
-	if gum spin -s globe --title "Downloading archive" -- wget -P $installation_prefix $url ; then
-		logger info "Successfully download archive!"	
-		else 	
-		logger error "Something has gone wrong, could not download archive."
+# basically this is equivalent to `depends_on` but for checking if `gum` is installed.
+# because `gum` is important to run this post-installation script
+check_for_gum () {
+	echo "Checking for gum" 
+	if ! command -v gum 2>&1 > /dev/null; then
+		echo "gum is not installed! Please install before proceeding."
 		exit 1
 	fi	
 }
 
-## param 1: archive_file
-## param 2: extraction prefix 
+# param 1: url
+# param 2: download destination
+# param 3: renamed file
+fetch_archive () {
+	url="$1"
+	dest="$2"	
+	rename="$3"	
+		
+	if gum spin -s globe --title "Fetching archive 📦" -- wget -O "$dest/$rename" "$url"; then 
+		logger info "Successfully fetched archive :white_check_mark:"	
+	else 
+		logger error ":warning: could not fetch archive"
+		exit 1
+	fi
+}
+
+# param 1: source archive file path
+# param 2: extracted path (path to new extraction directory)
+handle_tar() {
+	archive_file="$1"
+	extract_dir="$2"
+
+	mkdir -p "$extract_dir"	
+	if gum spin -s points --title "Extracting tar file" -- tar xf "$archive_file" -C "$extract_dir" --strip-components=1 ; then
+		logger info "Successfully extract tar file :white_check_mark:"		
+		rm "$archive_file"
+		logger info "deleted tar file :white_check_mark:"	
+	else
+		logger error ":warning: could not extract tr file."
+		exit 1
+	fi 	
+}
+
+# param 1: source archive file
+# param 2: destination extracted file (dont include the name)
+handle_zip() {	
+	archive_file="$1"
+	extract_dir="$2"
+	
+	if gum spin -s points --title "Extracting zip file" -- unzip "$archive_file" -d "$extract_dir"  ; then
+		logger info "Successfully extract zip file :white_check_mark:"		
+		rm "$archive_file"
+		logger info "deleted zip file :white_check_mark:"		
+	else
+		logger error ":warning: could not extract zip file."
+		exit 1
+	fi 	
+
+}
+
+# param 1: source archive file
+# param 2: destination dir
 extract_archive () {
-	archive_file="$1"	
-	extraction_prefix="$2"
-	
-	if gum spin -s points --title "Extracting archive" -- tar xf $archive_file --directory="$extraction_prefix" ; then
-		logger info "Successfully download archive!"	
-		else 
-		logger error "Something has gone wrong, could not extract archive."
-		exit 1
-	fi	
-}
+	archive_path="$1"
+	destination_dir="$2"
 
-## param 1: archive_file
-## param 2: extraction prefix 
-extract_archive_zip () {
-	archive_file="$1"	
-	extraction_prefix="$2"
+	source_file="$(basename "$archive_path")"		
+	extension="${source_file#*.}"
 	
-	if gum spin -s points --title "Extracting archive" -- unzip "$archive_file" -d "$extraction_prefix" ; then
-		logger info "Successfully download archive!"	
-		else 
-		logger error "Something has gone wrong, could not extract archive."
-		exit 1
-	fi	
-}
-
-
-## param 1: current user shell
-## param 2: strings to add into the shell config file.
-add_to_path () {
-	curr_shell=$1
-	add_strings=$2
-	
-	case $curr_shell in
-		bash)
-			logger info "Adding to path..."
-			echo "$add_strings" >> $HOME/.bashrc
+	case "$source_file" in
+		*.tar.gz)		
+			handle_tar "$archive_path" "$destination_dir"
 		;;
-		zsh)
-			logger info "Adding to path..."
-			echo "$add_strings" >> $HOME/.zshrc
+		*.tar.xz)	
+			handle_tar "$archive_path" "$destination_dir"
+		;;
+		*.zip)
+			handle_zip "$archive_path" "$destination_dir"
 		;;
 		*)
-			logger error "$curr_shell is not supported yet!"		
+			logger error ":warning: file extension $extension is not supported yet!"
 			exit 1
-		;;	 
-	esac
+		;;
+	esac	
+}
+
+# param 1: shell
+# param 2: strings to add
+add_to_path () {
+	shell="$1"
+	strta="$2"		
 	
+	case $shell in
+		bash)
+			echo "$2" >> ~/.bashrc
+		;;
+		zsh)
+			echo "$2" >> ~/.zshrc
+		;;
+		*)
+			logger error "shell $shell not supported yet!"
+			exit 1
+		;;
+	esac		
 }
 
 # ////////////////////////////////////
@@ -104,158 +139,112 @@ add_to_path () {
 # // 	 installer functions	    //
 # ////////////////////////////////////
 
-## param 1: OS 
-## param 2: architecture 
-## param 3: program version
-## param 4: installation prefix
-install_go () {		
-	logger info "Installing Go..."
+# param 1: OS
+# param 2: architecture
+# param 3: program version
+# param 4: installation prefix
+install_go () {
+	logger info "Installing go 🐿️"
 
-	os="$1"
+	os="$1"		
 	architecture="$2"
-	go_version="$3"	
-	install_prefix="$4"
-	archive_file="go$go_version.$os-$architecture.tar.gz"
-	tar_url="https://go.dev/dl/$archive_file"		
+	version="$3"
+	prefix="$4"			
+	
+	archive_file="go$version.$os-$architecture.tar.gz"	
+	archive_url="https://go.dev/dl/$archive_file"
 	shell="$(basename $SHELL)"
 
-	if [[ "$architecture" == "x86_64" ]]; then 
-		archive_file="go$go_version.$os-amd64.tar.gz"
-		tar_url="https://go.dev/dl/$archive_file"		
-	fi 
-	
-	download_archive "$tar_url" "$install_prefix"	
-	
-	extract_archive "$install_prefix/$archive_file" "$install_prefix"	
-	
-	add_to_path "$shell" "export GOPATH=\"$install_prefix/go/bin\""
-	add_to_path "$shell" "export PATH=\"\$PATH:\$GOPATH\""
-
-}
-
-## param 1: OS 
-## param 2: architecture 
-## param 3: program version
-## param 4: installation prefix
-install_zig () {
-	logger info "Installing Zig..."
-	
-	os="$1"
-	architecture="$2"
-	zig_version="$3"	
-	install_prefix="$4"
-	tar_url="https://ziglang.org/download/$zig_version/zig-$os-$architecture-$zig_version.tar.xz"
-	archive_file="zig-$os-$architecture-$zig_version.tar.xz"		
-	extracted_dir="zig-$os-$architecture-$zig_version"
-	shell="$(basename $SHELL)"
-	
-	download_archive "$tar_url" "$install_prefix"
-	
-	extract_archive "$install_prefix/$archive_file" "$install_prefix"
-
-	# rename extracted tarball into a more simpler directory name.	
-	mv "$install_prefix/$extracted_dir/" "$install_prefix/zig/"
-
-	# move the zig executable into the bin directory
-	mkdir -p "$install_prefix/zig/bin" 
-	mv "$install_prefix/zig/zig" "$install_prefix/zig/bin"
-
-	# add to path
-	add_to_path "$shell" "export PATH=\"\$PATH:$install_prefix/zig/bin\""	
-
-}
-
-## param 1: OS 
-## param 2: architecture 
-## param 3: program version
-## param 4: installation prefix
-install_omp () {
-	logger info "Installing Omp..."
-
-	os="$1"
-	architecture="$2"
-	ompversion="$3"
-	install_prefix="$4"	
-	script_url="https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v$ompversion/posh-$os-$architecture"
-	# rename downloaded archive into a simpler name
-	file_rename="oh-my-posh"
-	shell="$(basename $SHELL)"
-	
-	if [[ "$architecture" == "x86_64" ]]; then 
-		architecture="amd64"
-		script_url="https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v$ompversion/posh-$os-$architecture"
+	if [[ "$architecture" == "x86_64" ]]; then
+		archive_file="go$version.$os-amd64.tar.gz"	
+		archive_url="https://go.dev/dl/$archive_file"
 	fi
 	
-	# download only oh-my-posh script (no themes)	
-	download_archive "$script_url" "$install_prefix"
-
-	# create directory omp directory in bin
-	mkdir -p "$install_prefix/omp/bin"
+	fetch_archive "$archive_url" "$prefix" "goarchive.tar.gz"
 	
-	# rename and move oh-my-posh into $install_prefix/omp/bin
-	mv "$install_prefix/posh-$os-$architecture" "$install_prefix/$file_rename"
-	
-	# make the fiel executable	
-	chmod +x "$install_prefix/$file_rename" 
+	extract_archive "$prefix/goarchive.tar.gz" "$prefix/godir"		
 
-	mv "$install_prefix/$file_rename" "$install_prefix/omp/bin"
-	
-	# make the file executable 
-
-	# add to path	
-	add_to_path "$shell" "export TERM=\"xterm-256color\""		
-	add_to_path "$shell" "export PATH=\"\$PATH:$install_prefix/omp/bin\""	
-	add_to_path "$shell" "eval \"\$(oh-my-posh init "$shell")\""		
-			
+	add_to_path "$shell" "export GOPATH=\"$prefix/godir/bin\""
+	add_to_path "$shell" "export PATH=\"\$PATH:$GOPATH\""	
 }
 
-## param 1: architecture 
-## param 2: program version
-## param 3: installation prefix
-install_deno () {
-	logger info "Installing Deno..."
+install_rust() {
+	logger info "Installing Rust..."	
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh	
+}
+
+install_zig() {
+	logger info "Installing Zig..."	
+
+	os="$1"		
+	architecture="$2"
+	version="$3"
+	prefix="$4"	
+	archive_file="zig-$os-$architecture-$version.tar.xz"
+	url="https://ziglang.org/download/$version/$archive_file"
+	shell="$(basename $SHELL)"
+	
+	fetch_archive "$url" "$prefix" "zigarchive.tar.xz"	
+	
+	extract_archive "$prefix/zigarchive.tar.xz" "$prefix/zigdir"
+
+	# move zig binary into bin directory	
+	mkdir -p "$prefix/zigdir/bin"	
+	mv "$prefix/zigdir/zig" "$prefix/zigdir/bin"
+	
+	add_to_path "$shell" "export PATH=\"\$PATH:$prefix/zigdir/bin\""		
+}
+
+install_deno() {
+	logger info "Installing Deno..."	
 
 	architecture="$1"
-	deno_version="$2"
-	install_prefix="$3"
+	version="$2"
+	prefix="$3"
 	target=""
-	shell="$(basename $SHELL)"
-
-	# copied from https://deno.land/x/install@v0.3.1/install.sh 
-	case "$architecture" in
+	shell="$(basename $SHELL)"	
+	
+	case "$arch" in
 	"Darwin x86_64") target="x86_64-apple-darwin" ;;
 	"Darwin arm64") target="aarch64-apple-darwin" ;;
 	"Linux aarch64") target="aarch64-unknown-linux-gnu" ;;
 	*) target="x86_64-unknown-linux-gnu" ;;
 	esac	
+	
+	archive_url="https://dl.deno.land/release/v$version/deno-$target.zip"
+	
+	fetch_archive "$archive_url" "$prefix" "denoarchive.zip"	
 
-	archive_url="https://dl.deno.land/release/$deno_version/deno-$target.zip"
-	# this will always be the latest deno release.
+	extract_archive "$prefix/denoarchive.zip" "$prefix/denodir"
+	
+	mkdir -p "$prefix/denodir/bin"	
+	mv "$prefix/denodir/deno" "$prefix/denodir/bin"
 
-	# download deno's zip file	
-	download_archive "$archive_url" "$install_prefix"	
-	
-	# extract it 	
-	extract_archive_zip "$install_prefix/deno-$target.zip" "$install_prefix"
-	
-	# make $install_prefix/<program_name>/bin directory so that later can add to path.
-	mkdir -p "$install_prefix/denojs/bin"
-	mv "$install_prefix/deno" "$install_prefix/denojs/bin"
-	
-	add_to_path "$shell" "export PATH=\"\$PATH:$install_prefix/denojs/bin\""
+	add_to_path "$shell" "export PATH=\"\$PATH:$prefix/denodir/bin\""		
 }
 
-install_rust () {
-	logger info "Installing rust"
-	if ! gum spin -s globe --title "Getting install script" -- curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rust-install.sh ; then
-		logger error "Something wen't wrong, could not download install script."
-		exit 1		
-	fi	
-	logger info "Successfully downloaded install script."
-		logger info "Running install script."
-		
-		chmod +x rust-install.sh	
-		rust-install.sh
+install_omp() {
+	logger info "Installing Oh-my-posh..."	
+	os="$1"
+	architecture="$2"
+	ompversion="$3"
+	prefix="$4"
+	url="https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v$ompversion/posh-$os-$architecture"
+	shell="$(basename $SHELL)"
+	
+	if [[ "$architecture" == "x86_64" ]]; then		
+		architecture="amd64"
+		url="https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v$ompversion/posh-$os-$architecture"
+	fi
+	
+	fetch_archive "$url" "$prefix" "oh-my-posh"	
+
+	chmod +x "$prefix/oh-my-posh"	
+	
+	mkdir -p "$prefix/omp/bin"
+	mv "$prefix/oh-my-posh" "$prefix/omp/bin"		
+	
+	add_to_path "$shell" "export PATH=\"\$PATH:$prefix/omp/bin\""
 }
 
 # ////////////////////////////////////
@@ -267,81 +256,75 @@ install_rust () {
 # // 	 	entrypoint	    //
 # ////////////////////////////////////
 
-start_setup() {
-	# check for dependencies before we continue.
-	check_deps "wget" "tar" "gum" "xz" "unzip" "curl"
-	# list of chosen elements.
-	local chosen=$(gum choose --limit 4 --header "Choose one or more programs to be installed using this installer!" "Go (language)" "Rust (language)" "Zig (language)" "Deno (js runtime)", "Oh-my-posh (shell prompt)")
+main () {	
+	# this script is very dependant using `gum`
+	check_for_gum 	
+	depends_on "wget" "curl" "tar" "xz" "unzip"
 
-	# iterate over chosen element and handles each case.
-	for item in $chosen;
-	do 
-		case $item in
-			Go)
-				# check for dependencies before we continue.
-				os="$(uname | tr '[:upper:]' '[:lower:]')"
-				architecture="$(uname -i)"
-				goversion="$(gum input --placeholder "Which version of Go are you going to install?" --value="1.23.2" )"
-				install_prefix="$(gum input --placeholder "Where you do want Go to be installed?" --value="$HOME/.local/bin" )"
-
-				if [[ -z $goversion || -z $install_prefix ]]; then 
-					logger error "Please fill out the questions!"
+	a="Go"
+	b="Rust"
+	c="Zig"
+	d="Deno"
+	e="Oh-my-posh"
+	options="$(gum choose --limit 5 --header "Choose one or more programs to be installed!" $a $b $c $d $e)"
+	
+	for option in $options 
+	do
+		case $option in
+			$a)
+				os="$(uname | tr '[:upper:]' '[:lower:]')"	
+				arch="$(uname -i)"
+				version="$(gum input --placeholder "which version of $a are you going to install?" --value="1.23.2" )"	
+				prefix="$(gum input --placeholder "where do you want $a to be installed?" --value="$HOME/.local/bin" )"	
+				if [[ -z $version || -z $prefix  ]]; then 
+					logger error ":warning: Please fill out the version and prefix"
 					exit 1
-				else 
-					install_go $os $architecture $goversion $install_prefix
-				fi 
-			
+				fi
+				
+				install_go "$os" "$arch" "$version" "$prefix"
 			;;
-			Rust)
+			$b)
 				install_rust
 			;;
-			Zig)
-				os="$(uname | tr '[:upper:]' '[:lower:]')"
-				architecture="$(uname -i)"
-				zigversion="$(gum input --placeholder "Which version of Zig are you going to install?" --value="0.13.0" )"
-				install_prefix="$(gum input --placeholder "Where you do want Zig to be installed?" --value="$HOME/.local/bin" )"
-			
-				if [[ -z $zigversion || -z $install_prefix ]]; then 
-					logger error "Please fill out the questions!"
+			$c)
+				os="$(uname | tr '[:upper:]' '[:lower:]')"	
+				arch="$(uname -i)"
+				version="$(gum input --placeholder "which version of $c are you going to install?" --value="0.13.0" )"	
+				prefix="$(gum input --placeholder "where do you want $c to be installed?" --value="$HOME/.local/bin" )"	
+				if [[ -z $version || -z $prefix  ]]; then 
+					logger error ":warning: Please fill out the version and prefix"
 					exit 1
-				else 
-					install_zig $os $architecture $zigversion $install_prefix
 				fi
-
-			;;
-			Deno)
-
-				architecture="$(uname -sm)"
-				default_deno_version="$(curl -s https://dl.deno.land/release-latest.txt)"
-				denoversion="$(gum input --placeholder "Which version of Deno are you going to install?" --value="$default_deno_version" )"
-				install_prefix="$(gum input --placeholder "Where you do want Deno to be installed?" --value="$HOME/.local/bin" )"	
 				
-				install_deno "$architecture" "$denoversion" "$install_prefix"	
+				install_zig "$os" "$arch" "$version" "$prefix"
 			;;
-			Oh-my-posh)
-				
-				os="$(uname | tr '[:upper:]' '[:lower:]')"
-				architecture="$(uname -i)"
-				ompversion="$(gum input --placeholder "Which version of Oh-my-posh are you going to install?" --value="23.20.3" )"
-			install_prefix="$(gum input --placeholder "Where you do want Oh-my-posh to be installed?" --value="$HOME/.local/bin" )"	
-				if [[-z $zigversion || -z $install_prefix]]; then	
-					logger error "Please fill out the questions!"
-				else
-					install_omp $os $architecture $ompversion $install_prefix
+			$d)
+				arch="$(uname -i)"
+				version="$(gum input --placeholder "which version of $d are you going to install?" --value="2.0.4" )"	
+				prefix="$(gum input --placeholder "where do you want $d to be installed?" --value="$HOME/.local/bin" )"	
+				if [[ -z $version || -z $prefix  ]]; then 
+					logger error ":warning: Please fill out the version and prefix"
+					exit 1
 				fi
+				install_deno "$arch" "$version" "$prefix"
+			;;
+			$e)
+				os="$(uname | tr '[:upper:]' '[:lower:]')"	
+				arch="$(uname -i)"
+				version="$(gum input --placeholder "which version of $c are you going to install?" --value="23.20.3" )"	
+				prefix="$(gum input --placeholder "where do you want $c to be installed?" --value="$HOME/.local/bin" )"	
+				if [[ -z $version || -z $prefix  ]]; then 
+					logger error ":warning: Please fill out the version and prefix"
+					exit 1
+				fi
+				install_omp "$os" "$arch" "$version" "$prefix"
 			;;
 			*)
-				logger_with_time info rfc822 "Installation stopped. (completed)."
-				exit 0
+				logger error "Unreachable :x:"
+				exit 1
 			;;
-		esac
-	done		
-	exit 1
+		esac	
+	done	
 }
 
-# ////////////////////////////////////
-# // 	 	entrypoint	    //
-# ////////////////////////////////////
-
-
-start_setup
+main
