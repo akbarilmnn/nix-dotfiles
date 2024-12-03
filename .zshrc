@@ -38,7 +38,8 @@ autoload -U compinit && compinit
 
 ## common aliases ##
 alias la='eza -la --icons --tree --level 1'
-alias ls='eza -l --icons --tree --level 1'
+alias las='eza -l --icons --tree --level 1'
+alias ls='eza --icons --tree --level 1'
 alias rm='rip'
 alias remove='rip -i'
 alias restore='rip --seance | fzf | xargs -I {} rip --unbury {}'
@@ -46,6 +47,7 @@ alias ripbin='rip --seance | bat'
 alias cat='bat'
 alias omp='oh-my-posh'
 alias neofetch='macchina'
+alias sysupdate='sudo apt-get update -y && sudo apt-get upgrade -y'
 ## common aliases ##
 
 ## additional binary paths ##
@@ -53,7 +55,7 @@ export OPT_BINS="$HOME/.local/bin"
 # path to zig 
 export PATH="$PATH:$OPT_BINS/zig/bin"
 # path to Go
-export GOPATH="$OPT_BINS/go"
+# export GOPATH="$OPT_BINS/go"
 export PATH="$PATH:$GOPATH/bin"
 # path to oh-my-posh
 export PATH="$PATH:$OPT_BINS/omp"
@@ -68,6 +70,7 @@ export PATH="$PATH:$OPT_BINS/scripts"
 
 ## additional env vars 
 export EDITOR="vim"
+export PATH="$PATH:/usr/local/go/bin"
 ## additional env vars 
 
 ## additional help env vars for interacting with windows (host machine) ##

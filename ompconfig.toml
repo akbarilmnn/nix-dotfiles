@@ -23,7 +23,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     template = '{{.Path}}'
 
     [blocks.segments.properties]
-      style = 'full'
+      style = 'full' 
 # if you want to change separator icon
       # folder_separator_icon = "  "
    

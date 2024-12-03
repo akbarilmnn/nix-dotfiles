@@ -1,3 +1,3 @@
-require("config")
+require("base")
 require("keymaps")
-require("pacman")
+require("packages")
