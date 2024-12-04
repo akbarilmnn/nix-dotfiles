@@ -28,6 +28,10 @@ return {
 		--   `nvim-notify` is only needed, if you want to use the notification view.
 		--   If not available, we use `mini` as the fallback
 		"rcarriga/nvim-notify",
+		{
+			"karb94/neoscroll.nvim",
+			opts = {},
+		},
 		-- a plugin that beautify cursor in neovim (really cool!)
 		-- NOTE: requires neovim v0.10.2
 		{
