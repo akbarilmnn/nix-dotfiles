@@ -25,8 +25,8 @@
 			pkgs.git
 # bash replacement 
 			pkgs.zsh
-# for prettier prompt (disabled for as long as i use powerlevel10k)
-			# pkgs.starship
+# cycle: oh-my-zsh -> oh-my-posh -> starship.
+			pkgs.starship
 # disk usage in rust
 			pkgs.du-dust
 # rusty `grep`
@@ -117,7 +117,9 @@
 	".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.vimrc";
 	".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.tmux.conf";
 	".config/yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/yazi";
-	"ompconfig.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/ompconfig.toml";
+	".config/starship".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/starship";
+	# NOTE: sometimes switch to starship prompt
+	# "ompconfig.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/ompconfig.toml";
 	".config/wezterm/wezterm.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/wezterm.lua";
 	".config/git/config".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/git/config";
 # # Building this configuration will create a copy of 'dotfiles/screenrc' in

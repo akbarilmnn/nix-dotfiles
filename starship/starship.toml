@@ -1,0 +1,20 @@
+# display on prompt
+format = '''
+[\[](yellow)$username$hostname $directory[\]](yellow)[\$](bold green) 
+'''
+
+
+# do not insert new line after pressing enter.
+add_newline = false
+
+[character]
+success_symbol = '[\$](bold green)'
+
+[hostname]
+format = '[$hostname](#25d366)'
+
+[username]
+format = '[$user](#3ca8e0)[@](#e33e30)'
+
+[directory]
+format = '[$path](#f170cd)'

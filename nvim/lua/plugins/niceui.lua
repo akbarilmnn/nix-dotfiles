@@ -34,11 +34,12 @@ return {
 		},
 		-- a plugin that beautify cursor in neovim (really cool!)
 		-- NOTE: requires neovim v0.10.2
-		{
-			"sphamba/smear-cursor.nvim",
-			opts = {
-				cursor_color = "#e5c07b",
-			},
-		},
+		-- kind of distracting.
+		--{
+		--	"sphamba/smear-cursor.nvim",
+		--	opts = {
+		--		cursor_color = "#e5c07b",
+		--	},
+		--},
 	},
 }

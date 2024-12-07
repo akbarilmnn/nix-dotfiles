@@ -45,7 +45,9 @@ alias remove='rip -i'
 alias restore='rip --seance | fzf | xargs -I {} rip --unbury {}'
 alias ripbin='rip --seance | bat'
 alias cat='bat'
-alias omp='oh-my-posh'
+# sometimes switch to starship prompt
+# NOTE: sometimes switch to starship prompt
+# alias omp='oh-my-posh'
 alias neofetch='macchina'
 alias sysupdate='sudo apt-get update -y && sudo apt-get upgrade -y'
 ## common aliases ##
@@ -57,8 +59,9 @@ export PATH="$PATH:$OPT_BINS/zig/bin"
 # path to Go
 # export GOPATH="$OPT_BINS/go"
 export PATH="$PATH:$GOPATH/bin"
+# NOTE: sometimes switch to starship prompt.
 # path to oh-my-posh
-export PATH="$PATH:$OPT_BINS/omp"
+# export PATH="$PATH:$OPT_BINS/omp"
 # path to Deno 
 export DENO_INSTALL="$OPT_BINS/deno"
 export DENO_INSTALL_ROOT="$DENO_INSTALL/bin"
@@ -71,6 +74,7 @@ export PATH="$PATH:$OPT_BINS/scripts"
 ## additional env vars 
 export EDITOR="vim"
 export PATH="$PATH:/usr/local/go/bin"
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 ## additional env vars 
 
 ## additional help env vars for interacting with windows (host machine) ##
@@ -82,8 +86,10 @@ export WALLPAPERDIR="$WINUSERDIR/Pictures/wallpapers"
 ## startup scripts ##
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+# NOTE: sometimes switch to starship prompt.
 # initializes oh my posh with configuration specified by path.
-eval "$(oh-my-posh init zsh --config $HOME/ompconfig.toml)"
+# eval "$(oh-my-posh init zsh --config $HOME/ompconfig.toml)"
 ## startup scripts ##
 
 # if you want the cursor to be a block rather than a beam
