@@ -60,6 +60,9 @@ local options = {
 
 	-- to make clipboard support possible (turns out i have to disable this in WSL2) see `:help cliboard.provider`
 	-- clipboard = "unnamedplus",
+
+	-- thanks to @tjdevries
+	laststatus = 3,
 }
 
 for key, value in pairs(options) do

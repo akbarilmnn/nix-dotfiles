@@ -75,6 +75,7 @@ export PATH="$PATH:$OPT_BINS/scripts"
 export EDITOR="vim"
 export PATH="$PATH:/usr/local/go/bin"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+export PATH="$PATH:$HOME/go/bin"
 ## additional env vars 
 
 ## additional help env vars for interacting with windows (host machine) ##

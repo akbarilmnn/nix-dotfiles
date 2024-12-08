@@ -1,6 +1,10 @@
 # display on prompt
 format = '''
-[\[](yellow)$username$hostname $directory[\]](yellow)[\$](bold green) 
+[\[](#00c7bc)$username$hostname $directory[\]](#00c7bc)[\$](#4ee64f) 
+'''
+
+right_format = '''
+$git_branch$git_status
 '''
 
 
@@ -8,13 +12,19 @@ format = '''
 add_newline = false
 
 [character]
-success_symbol = '[\$](bold green)'
+success_symbol = '[\$](cyan)'
 
 [hostname]
 format = '[$hostname](#25d366)'
 
 [username]
-format = '[$user](#3ca8e0)[@](#e33e30)'
+format = '[$user](yellow)[@](#e33e30)'
 
 [directory]
-format = '[$path](#f170cd)'
+format = '[$path](#f170ed)'
+fish_style_pwd_dir_length = 1
+
+[git_branch]
+symbol = ' '
+format = ' [$symbol](#ff6ca6)[$branch](#12c00d) '
+
