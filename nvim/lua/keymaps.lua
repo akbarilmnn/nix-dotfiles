@@ -23,7 +23,8 @@ set_keymap("n", "<leader>v", "<C-v>", "short to go to visual mode")
 -- force quit.
 set_keymap("n", "<leader>e", ":q!<cr>", "shortcut to quit without saving anything")
 -- shortcut to go to prev and next buffers.
-set_keymap("n", "<leader>n", "<cmd>bnext<cr>", "go to the next buffer")
+-- used for snipe.nvim plugin :)
+--set_keymap("n", "<leader>n", "<cmd>bnext<cr>", "go to the next buffer")
 set_keymap("n", "<leader>p", "<cmd>bprevious<cr>", "go to the previous buffer")
 set_keymap("n", "<leader>x", "<cmd>bwipeout<cr>", "close buffer")
 -- go to insert mode easily

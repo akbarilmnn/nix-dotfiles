@@ -18,4 +18,11 @@ return {
 		-- cool icons.
 		"nvim-tree/nvim-web-devicons",
 	},
+	config = function()
+		require("telescope").setup({
+			extensions = {
+				fzf = {},
+			},
+		})
+	end,
 }
