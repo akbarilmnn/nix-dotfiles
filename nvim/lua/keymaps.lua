@@ -1,17 +1,9 @@
 local set_keymap = function(mode, key_bindings, cmd, desc)
-	vim.keymap.set(mode, key_bindings, cmd, {
-		noremap = true,
-		silent = true,
-		desc = desc,
-	})
-end
-
-local lsp_keymap = function(keys, func, desc)
-	if desc then
-		desc = "LSP: " .. desc
-	end
-
-	vim.keymap.set("n", keys, func, { desc = desc })
+    vim.keymap.set(mode, key_bindings, cmd, {
+        noremap = true,
+        silent = true,
+        desc = desc,
+    })
 end
 
 -- write to file.
@@ -22,9 +14,8 @@ set_keymap("n", "<leader>q", "<cmd>wq<cr>", "shortcut to save and quit a file")
 set_keymap("n", "<leader>v", "<C-v>", "short to go to visual mode")
 -- force quit.
 set_keymap("n", "<leader>e", ":q!<cr>", "shortcut to quit without saving anything")
--- shortcut to go to prev and next buffers.
--- used for snipe.nvim plugin :)
---set_keymap("n", "<leader>n", "<cmd>bnext<cr>", "go to the next buffer")
+set_keymap("n", "<M-n>", "<cmd>cnext<cr>", "go to next quickfix list item")
+set_keymap("n", "<M-p>", "<cmd>cprevious<cr>", "go to previous quickfix list item")
 set_keymap("n", "<leader>p", "<cmd>bprevious<cr>", "go to the previous buffer")
 set_keymap("n", "<leader>x", "<cmd>bwipeout<cr>", "close buffer")
 -- go to insert mode easily
@@ -36,7 +27,6 @@ set_keymap("v", "K", ":m '<-2<cr>gv=gv", "move a block of code down")
 set_keymap("v", "<", "<gv", "move a block of code into the left")
 set_keymap("v", ">", ">gv", " move a block of code into the right")
 -- telescope keymaps
---set_keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", "find files within current directory")
 set_keymap("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", "find string in current working directory as you type")
 set_keymap("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", "find string under cursor in current working directory")
 set_keymap("n", "<leader>fb", "<cmd>Telescope buffers<cr>", "list open buffers in current neovim instance")
@@ -45,15 +35,15 @@ set_keymap("n", "<leader>fg", "<cmd>Telescope git_files<cr>", "list git files.")
 set_keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", "list keymaps")
 
 set_keymap("n", "<leader>ff", function()
-	local builtin = require("telescope.builtin")
-	local themes = require("telescope.themes")
-	local opts = {
-		previewer = false,
-		prompt_prefix = " ",
-		hidden = true,
-	}
+    local builtin = require("telescope.builtin")
+    local themes = require("telescope.themes")
+    local opts = {
+        previewer = false,
+        prompt_prefix = " ",
+        hidden = true,
+    }
 
-	builtin.find_files(themes.get_dropdown(opts))
+    builtin.find_files(themes.get_dropdown(opts))
 end, "find files within current directory")
 
 -- horizontal keymaps

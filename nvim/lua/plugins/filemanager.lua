@@ -1,6 +1,6 @@
 return {
 	"stevearc/oil.nvim",
-	cmd = "Oil",
+	-- cmd = "Oil",
 	init = function()
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "oil",
@@ -9,10 +9,11 @@ return {
 			end,
 		})
 	end,
-	opts = {},
 	-- Optional dependencies
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
-		require("oil").setup({})
+		require("oil").setup({
+			default_file_explorer = true,
+		})
 	end,
 }
