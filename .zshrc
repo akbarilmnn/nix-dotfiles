@@ -13,6 +13,8 @@ fi
 # source the plugins 
 source "${ZINIT_HOME}/zinit.zsh"
 
+bindkey "^r" fzf-history-widget
+bindkey "^ " autosuggest-accept
 
 ### Plugins downloaded by `zinit` ###
 # a more complete vim keybindings in zsh or use simple vim keybidnings with `bindkey -v`
@@ -59,6 +61,8 @@ export PATH="$PATH:$OPT_BINS/zig/bin"
 # path to Go
 # export GOPATH="$OPT_BINS/go"
 export PATH="$PATH:$GOPATH/bin"
+# path to Ghostty 
+export PATH="$PATH:$OPT_BINS/ghostty/bin"
 # NOTE: sometimes switch to starship prompt.
 # path to oh-my-posh
 # export PATH="$PATH:$OPT_BINS/omp"
@@ -115,7 +119,7 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-## additional completion configuraiton ##
+## additional completion configuration ##
 # make completions case-insensitive.
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # make completions has colors.
@@ -125,7 +129,7 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls $realpath'
  
-## additional completion configuraiton ##
+## additional completion configuration ##
 
 ## yazi configuration 
 function yz() {

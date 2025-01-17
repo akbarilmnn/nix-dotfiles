@@ -47,12 +47,11 @@ return {
                 })
             end,
         },
-        -- source for LSP completions.
-        "hrsh7th/cmp-nvim-lsp",
+        "Saghen/blink.cmp",
     },
     config = function()
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
         local lspconfig = require("lspconfig")
+        local capabilities = require("blink.cmp").get_lsp_capabilities()
         local mason_lsp = require("mason-lspconfig")
 
         local handlers = {
