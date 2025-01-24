@@ -31,7 +31,7 @@ return {
             list = {
                 max_items = 15,
                 selection = {
-                    preselect = true,
+                    preselect = false,
                 },
             },
             menu = {

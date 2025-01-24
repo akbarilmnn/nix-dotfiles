@@ -52,12 +52,14 @@ alias cat='bat'
 # alias omp='oh-my-posh'
 alias neofetch='macchina'
 alias sysupdate='sudo apt-get update -y && sudo apt-get upgrade -y'
+alias python='python3'
 ## common aliases ##
 
 ## additional binary paths ##
 export OPT_BINS="$HOME/.local/bin"
 # path to zig 
 export PATH="$PATH:$OPT_BINS/zig/bin"
+export DISPLAY=:0.0
 # path to Go
 # export GOPATH="$OPT_BINS/go"
 export PATH="$PATH:$GOPATH/bin"
@@ -152,3 +154,17 @@ function restoreall() {
 
 	echo "You answer is $confirmation"
 }
+
+function getcmd() {
+	local cmd_name="$1"
+	local res="$(command -v "$cmd_name" &> /dev/null; echo $?)"
+	if [ $res -eq 0 ]; then
+		local cmd_path="$(which "$cmd_name")"
+		echo "$cmd_name found!"
+		echo "in $cmd_path"
+	else
+		echo "$cmd_name not found!"
+	fi
+}
+
+export PATH="/home/serein/.pixi/bin:$PATH"

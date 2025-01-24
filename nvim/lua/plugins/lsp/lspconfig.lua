@@ -71,6 +71,26 @@ return {
                     },
                 })
             end,
+            ["pyright"] = function()
+                local on_attach = function(client, _)
+                    if client.name == "ruff_lsp" then
+                        client.server_capabilities.hoverProvider = false
+                    end
+                end
+                lspconfig.pyright.setup({
+                    on_attach = on_attach,
+                    settings = {
+                        pyright = {
+                            disableOrganizeImports = true,
+                        },
+                        python = {
+                            analysis = {
+                                ignore = { "*" },
+                            },
+                        },
+                    },
+                })
+            end,
         }
         mason_lsp.setup_handlers(handlers)
     end,

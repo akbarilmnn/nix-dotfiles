@@ -20,7 +20,6 @@ return {
                 c = { "clang-format" },
                 cpp = { "clang-format" },
                 zig = { "zigfmt" },
-                ["*"] = { "codespell" },
             },
             format_on_save = {
                 timeout_ms = 450,

@@ -33,16 +33,47 @@ return {
             terminalColors = true, -- define vim.g.terminal_color_{0,17}
             colors = {    -- add/modify theme and palette colors
                 palette = {},
-                theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+                theme = {
+                    wave = {},
+                    lotus = {},
+                    dragon = {},
+                    all = {
+                        ui = {
+                            bg_gutter = "none",
+                        },
+                    },
+                },
             },
             overrides = function(colors) -- add/modify highlights
+                local theme = colors.theme
                 return {
-                    ["@type"] = { fg = "#fcd86d" },
-                    ["@function"] = { fg = "#fdec56" },
+                    -- telescope windows overrides.
+                    TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = "None" },
+                    TelescopeResultsBorder = { fg = theme.ui.bg_p1, bg = "None" },
+                    -- treesitter highlights overrides.
+                    ["@type"] = {
+                        -- fg = "#fcd86d"
+                        fg = "#71c9bd",
+                    },
+                    ["@function"] = { fg = "#fcca69" },
                     ["WinSeparator"] = { fg = "None" },
-                    ["@variable.parameter"] = { fg = "#fddd80" },
+                    ["@variable"] = { fg = "#edddad" },
+                    ["@variable.parameter"] = {
+                        -- fg = "#af9ed3"
+                        fg = "#f6b363",
+                    },
                     ["@property"] = { fg = "#ee5a98" },
-                    ["@keyword"] = { fg = "#d568d3" },
+                    ["@keyword"] = {
+                        -- fg = "#d568d3"
+                        fg = "#639acb",
+                    },
+                    ["Normal"] = { bg = "#141414" },
+                    ["@operator"] = { fg = "#7fbddc" },
+                    ["@module"] = { fg = "#97c36c" },
+                    ["@string"] = {
+                        -- fg = "#c89191"
+                        fg = "#cb9292",
+                    },
                 }
             end,
             theme = "wave", -- Load "wave" theme when 'background' option is not set
