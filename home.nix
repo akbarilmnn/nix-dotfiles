@@ -68,7 +68,7 @@
 			# outdated, rather build from .deb files
 			# pkgs.wezterm
 # C compiler 
-			pkgs.gcc
+			# pkgs.gcc
 # unzip tarballs (idk why WSL Ubuntu doesn't have this by default)
 			pkgs.unzip
 # command runners

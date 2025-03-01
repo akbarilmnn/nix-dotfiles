@@ -16,9 +16,11 @@ success_symbol = '[\$](cyan)'
 
 [hostname]
 format = '[$hostname](#25d366)'
+ssh_only = false
 
 [username]
 format = '[$user](yellow)[@](#e33e30)'
+show_always = true
 
 [directory]
 format = '[$path](#f170ed)'

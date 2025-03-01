@@ -60,6 +60,9 @@ export OPT_BINS="$HOME/.local/bin"
 # path to zig 
 export PATH="$PATH:$OPT_BINS/zig/bin"
 export DISPLAY=:0.0
+export WAYLAND_DISPLAY=wayland-0
+export VDPAU_DIRVER=va_gl
+export LIBVA_DRIVER_NAME=d3d12
 # path to Go
 # export GOPATH="$OPT_BINS/go"
 export PATH="$PATH:$GOPATH/bin"
@@ -74,6 +77,8 @@ export DENO_INSTALL_ROOT="$DENO_INSTALL/bin"
 export PATH="$PATH:$DENO_INSTALL/bin"
 # path to helper scripts 
 export PATH="$PATH:$OPT_BINS/scripts"
+# path to snap 
+export PATH="$PATH:/snap/bin"
 
 ## additional binary paths ##
 
@@ -83,6 +88,7 @@ export PATH="$PATH:/usr/local/go/bin"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$HOME/.tmux/plugins/tpm"
+export PATH="/home/serein/.pixi/bin:$PATH"
 ## additional env vars 
 
 ## additional help env vars for interacting with windows (host machine) ##
@@ -95,6 +101,7 @@ export WALLPAPERDIR="$WINUSERDIR/Pictures/wallpapers"
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+eval "$(pixi completion --shell zsh)"
 # NOTE: sometimes switch to starship prompt.
 # initializes oh my posh with configuration specified by path.
 # eval "$(oh-my-posh init zsh --config $HOME/ompconfig.toml)"
@@ -167,4 +174,5 @@ function getcmd() {
 	fi
 }
 
-export PATH="/home/serein/.pixi/bin:$PATH"
+
+. "$HOME/.local/bin/env"

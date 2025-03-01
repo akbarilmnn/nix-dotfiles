@@ -71,6 +71,15 @@ return {
                     },
                 })
             end,
+            ["zls"] = function()
+                lspconfig.zls.setup({
+                    settings = {
+                        zls = {
+                            zig_exe_path = "/home/serein/.local/bin/zig/bin/zig",
+                        },
+                    },
+                })
+            end,
             ["pyright"] = function()
                 local on_attach = function(client, _)
                     if client.name == "ruff_lsp" then

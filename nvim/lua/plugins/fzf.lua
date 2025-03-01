@@ -24,7 +24,7 @@ return {
             pickers = {
                 find_files = {
                     previewer = false,
-                    prompt_prefix = "  ",
+                    prompt_prefix = "   ",
                     hidden = false,
                     theme = "dropdown",
                 },

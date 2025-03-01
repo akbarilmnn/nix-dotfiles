@@ -14,7 +14,7 @@ return {
         config = function()
             -- how to initialize onedark
             -- require("onedark").load()
-            vim.cmd([[colorscheme kanagawa]])
+            vim.cmd([[colorscheme darcula-solid]])
         end,
     },
     {
@@ -50,6 +50,10 @@ return {
                     -- telescope windows overrides.
                     TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = "None" },
                     TelescopeResultsBorder = { fg = theme.ui.bg_p1, bg = "None" },
+                    TelescopeSelection = { fg = "#ee5a98", bg = "#141414" },
+                    -- blink.cmp overrides
+                    BlinkCmpMenu = { fg = theme.ui.bg_p1, bg = "None" },
+                    BlinkCmpMenuBorder = { fg = theme.ui.bg_p1, bg = "None" },
                     -- treesitter highlights overrides.
                     ["@type"] = {
                         -- fg = "#fcd86d"
@@ -74,6 +78,8 @@ return {
                         -- fg = "#c89191"
                         fg = "#cb9292",
                     },
+                    ["@punctuation.delimiter"] = { fg = "#a9b1d6" },
+                    ["@punctuation.bracket"] = { fg = "#c087f9" },
                 }
             end,
             theme = "wave", -- Load "wave" theme when 'background' option is not set
@@ -147,4 +153,5 @@ return {
             end,
         },
     },
+    { "briones-gabriel/darcula-solid.nvim", dependencies = { "rktjmp/lush.nvim" } },
 }
