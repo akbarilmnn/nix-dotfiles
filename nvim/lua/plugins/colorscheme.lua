@@ -1,6 +1,7 @@
 return {
     {
         "navarasu/onedark.nvim",
+        lazy = true,
         opts = {
             style = "darker",
             highlights = {
@@ -11,14 +12,10 @@ return {
                 ["WinSeparator"] = { bg = "None" },
             },
         },
-        config = function()
-            -- how to initialize onedark
-            -- require("onedark").load()
-            vim.cmd([[colorscheme darcula-solid]])
-        end,
     },
     {
         "rebelot/kanagawa.nvim",
+        lazy = true,
         -- Default options:
         opts = {
             compile = false, -- enable compiling the colorscheme
@@ -91,6 +88,7 @@ return {
     },
     {
         "folke/tokyonight.nvim",
+        -- lazy = true,
         opts = {
             style = "night",
             styles = {
@@ -152,6 +150,14 @@ return {
                 }
             end,
         },
+        config = function()
+            vim.cmd([[colorscheme tokyonight-moon]])
+        end,
     },
-    { "briones-gabriel/darcula-solid.nvim", dependencies = { "rktjmp/lush.nvim" } },
+    { "briones-gabriel/darcula-solid.nvim", lazy = true, dependencies = { "rktjmp/lush.nvim" } },
+    {
+        "kepano/flexoki-neovim",
+        lazy = true,
+        name = "flexoki",
+    },
 }
