@@ -1,12 +1,11 @@
 # display on prompt
 format = '''
-[\[](#00c7bc)$username$hostname $directory[\]](#00c7bc)[\$](#4ee64f) 
+[#](#00c7bc)[\[](#00c7bc)$username$hostname $directory[\]](#00c7bc) 
 '''
 
 right_format = '''
 $git_branch$git_status
 '''
-
 
 # do not insert new line after pressing enter.
 add_newline = false
