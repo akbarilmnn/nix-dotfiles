@@ -117,7 +117,7 @@
 	home.file = {
 	".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.zshrc";
 	".zshenv".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.zshenv";
-	".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/nvim";
+	# ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/nvim";
 	".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.vimrc";
 	".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.tmux.conf";
 	".config/yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/yazi";

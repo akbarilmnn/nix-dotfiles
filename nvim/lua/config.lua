@@ -1,15 +1,24 @@
--- import all the modules.
-require("autocmds")
-require("usercmds")
-
--- declare al
+-- declare all
 local global_options = {
     -- set map leader here before lazy loads...
     mapleader = " ",
     -- disable netrw at the very start of your init.lua
     leaded_netrw = 1,
     loaded_netrwPlugin = 1,
+    clipboard = {
+        name = "WslClipboard",
+        copy = {
+            ["+"] = 'clip.exe',
+            ["*"] = 'clip.exe'
+        },
+        paste = {
+            ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+            ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        },
+        cache_enabled = 0
+    }
 }
+
 
 for key, value in pairs(global_options) do
     vim.g[key] = value
@@ -26,7 +35,8 @@ local options = {
     -- guicursor = ""
     expandtab = true,
     smarttab = true,
-    smartindent = true,
+    smartindent = false,
+    cindent = false,
     showmode = false,
     -- because of this when i copy and paste something neovim just automatically indent the way that i dont like
     autoindent = false,
@@ -59,7 +69,6 @@ local options = {
     completeopt = { "menuone", "noselect", "menu" },
 
     -- to make clipboard support possible (turns out i have to disable this in WSL2) see `:help cliboard.provider`
-    -- clipboard = "unnamedplus",
 
     -- thanks to @tjdevries
     laststatus = 3,

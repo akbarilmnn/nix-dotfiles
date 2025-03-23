@@ -27,11 +27,9 @@ require("lazy").setup({
     -- import your plugins.
     { import = "plugins" },
     -- `.` notation is a path notation in Lua.
-    { import = "plugins.lsp" },
+    --{ import = "plugins.lsp" },
   },
   -- automatically check for plugin updates
-  checker = { enabled = true }, 
+  -- disable checking for plugins updates (annoying)
+  -- checker = { enabled = true }, 
 })
-
-
-

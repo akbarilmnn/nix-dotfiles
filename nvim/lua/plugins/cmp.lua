@@ -2,10 +2,6 @@ return {
 
     "saghen/blink.cmp",
     dependencies = "rafamadriz/friendly-snippets",
-    cond = function()
-        local deps = { { "curl", "git" } }
-        return require("utils").check_deps_with_fallback(deps)
-    end,
     -- use a release tag to download pre-built binaries
     version = "v0.*",
     -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
