@@ -18,13 +18,45 @@ return {
 	},
 	dependencies = {
 		{
-			"echasnovski/mini.pairs",
-			opts = {},
+			"windwp/nvim-autopairs",
+			event = "InsertEnter",
+			config = true,
+		},
+		{
+			"leath-dub/snipe.nvim",
+			opts = {
+				ui = {
+					position = "center",
+					open_win_override = {
+						title = "Opened Buffers",
+						border = "rounded",
+					},
+				},
+			},
+			keys = {
+				{
+					"<leader>n",
+					mode = { "n" },
+					function()
+						require("snipe").open_buffer_menu()
+					end,
+					desc = "Open buffers",
+				},
+			},
+		},
+		{
+			"sphamba/smear-cursor.nvim",
+			opts = { -- Default  Range
+				stiffness = 0.8, -- 0.6      [0, 1]
+				trailing_stiffness = 0.5, -- 0.3      [0, 1]
+				distance_stop_animating = 0.5, -- 0.1      > 0
+			},
 		},
 		{
 			"echasnovski/mini.files",
 			opts = {
 				mappings = {
+					close = "q",
 					go_in = "<cr>",
 					go_out = "-",
 				},
@@ -36,7 +68,7 @@ return {
 					function()
 						require("mini.files").open()
 					end,
-					desc = "Miller column file explorer",
+					desc = "Open file explorer",
 				},
 			},
 		},

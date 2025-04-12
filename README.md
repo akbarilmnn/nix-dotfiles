@@ -7,12 +7,22 @@ to create glamorous shell scripts.
 WIP (always).
 
 # Dependencies 
+-   [Alacritty](https://alacritty.org) or any other terminal emulators that works in windows
 -   [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
 -   [zsh](https://github.com/zsh-users/zsh)
 -   [nix](https://nixos.org/download)
 -   [git](https://git-scm.com)
 -   [home-manager](https://nix-community.github.io/home-manager)
 # Setup 
+
+# Install Alacritty
+Download the .msi [file](https://github.com/alacritty/alacritty/releases/download/v0.15.1/Alacritty-v0.15.1-installer.msi) for windows.
+after installing alacritty, copy the configuration files in this directory into your installation path for alacritty.
+
+## Footnote 
+There seems to be an [issue](https://www.reddit.com/r/tmux/comments/1fluve2/comment/lo61r4o/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+when using WSL2 in alacritty + tmux in windows. In order to fix this, you need to find the up-to-date `conpty.dll` and `OpenConsole.exe`. To do this, 
+simply install [wezterm](https://wezterm.org/), go to the installation directory, copy those two files and put it inside install folder of alacritty, remove wezterm.
 
 ### Install WSL 
 Head over to [microsoft's site](https://learn.microsoft.com/en-us/windows/wsl/install) and install WSL.
@@ -75,4 +85,3 @@ home-manager switch --flake .
 ```
 
 close your shell and you are done.
-

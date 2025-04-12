@@ -5,6 +5,8 @@ return {
 	priority = 1000,
 	init = function()
 		vim.g.moonflyItalics = false
+		vim.g.moonflyWinSeparator = 1
+		vim.g.moonflyUndercurls = true
 	end,
 	config = function()
 		local color = require("moonfly").palette
@@ -17,12 +19,13 @@ return {
 				vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = color.sky })
 				vim.api.nvim_set_hl(0, "MiniIndentscopeSymbol", { fg = color.yellow })
 				vim.api.nvim_set_hl(0, "BlinkCmpMenu", { fg = color.bg })
-				vim.api.nvim_set_hl(0, "MiniFilesNormal", { fg = color.bg })
+				vim.api.nvim_set_hl(0, "MiniFilesTitle", { bg = color.bg })
 				vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = color.red })
 				vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = color.yellow })
 				vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = color.sky })
 				vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = color.blue })
 				vim.api.nvim_set_hl(0, "DiagnosticVirtualTextOk", { fg = color.emerald })
+				vim.api.nvim_set_hl(0, "NormalFloat", { bg = color.bg })
 			end,
 			group = custom_highlight,
 		})

@@ -115,9 +115,10 @@
 # Home Manager is pretty good at managing dotfiles. The primary way to manage
 # plain files is through 'home.file'.
 	home.file = {
-	".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.zshrc";
+	"${config.home.homeDirectory}/.config/zsh/.zaliases".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.zaliases"
+	"${config.home.homeDirectory}/.config/zsh/.zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.zshrc";
 	".zshenv".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.zshenv";
-	# ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/nvim";
+	".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/nvim";
 	".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.vimrc";
 	".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/.tmux.conf";
 	".config/yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/env/yazi";

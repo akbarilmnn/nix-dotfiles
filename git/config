@@ -1,6 +1,5 @@
 [alias]
-	# history = "log --oneline --graph --decorate"
-	history = serie	
+	history = "log --oneline --graph --decorate"
 [core]
 	editor = "nvim"
 
