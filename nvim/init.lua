@@ -1,3 +1,3 @@
 require("config")
 require("maps")
-require("depsmgr")
+require("packages")
