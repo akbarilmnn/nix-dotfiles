@@ -83,16 +83,11 @@ return {
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-
                     elseif luasnip.expand_or_jumpable() then
                         luasnip.expand_or_jump()
-
-                    elseif has_words_before() then
-                        cmp.complete()
                     else
                         fallback()
                     end
-
                 end, { "i", "s" }),
                 ["<S-Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
@@ -108,8 +103,8 @@ return {
                 { name = 'nvim_lsp' },
                 { name = 'luasnip' },
             }, {
-                    { name = 'buffer' },
-                })
+                { name = 'buffer' },
+            })
         })
     end
 }

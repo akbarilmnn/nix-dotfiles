@@ -27,6 +27,9 @@ return {
 				"toml",
 				"yaml",
 				"java",
+				-- warning from noice.nvim
+				"regex",
+				"bash",
 			},
 			highlight = {
 				enable = true,
