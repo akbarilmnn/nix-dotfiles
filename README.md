@@ -1,87 +1,177 @@
-# a more organized dotfiles
-This repo contains my dotfiles configured, specifically for WSL2 Ubuntu-24.04 ,using [nix's package manager](https://nixos.org/download).
-I'm planning ahead to add shell scripts in `home.nix` with [gum](https://github.com/charmbracelet/gum) which is a great tool 
-to create glamorous shell scripts.
+# Documentation for My (PDE) Personalized Development Environment. 
 
 # Status
 WIP (always).
 
-# Dependencies 
--   [Alacritty](https://alacritty.org) or any other terminal emulators that works in windows
--   [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
--   [zsh](https://github.com/zsh-users/zsh)
--   [nix](https://nixos.org/download)
--   [git](https://git-scm.com)
--   [home-manager](https://nix-community.github.io/home-manager)
-# Setup 
+## Tools 
 
-# Install Alacritty
-Download the .msi [file](https://github.com/alacritty/alacritty/releases/download/v0.15.1/Alacritty-v0.15.1-installer.msi) for windows.
-after installing alacritty, copy the configuration files in this directory into your installation path for alacritty.
+### OS 
+I'm curently using `windows` as my daily driver operating system. But when i code, i use `WSL` 
 
-## Footnote 
-There seems to be an [issue](https://www.reddit.com/r/tmux/comments/1fluve2/comment/lo61r4o/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
-when using WSL2 in alacritty + tmux in windows. In order to fix this, you need to find the up-to-date `conpty.dll` and `OpenConsole.exe`. To do this, 
-simply install [wezterm](https://wezterm.org/), go to the installation directory, copy those two files and put it inside install folder of alacritty, remove wezterm.
-
-### Install WSL 
+#### Installation
 Head over to [microsoft's site](https://learn.microsoft.com/en-us/windows/wsl/install) and install WSL.
 
-### Update Packages 
+#### Update Packages 
 After installation, please update your package repository and your system as well.
 ```
 $ sudo apt-get update -y && sudo apt-get upgrade -y
 ```
 
-### Install Other shells
-I personally use [zsh](https://github.com/zsh-users/zsh) with a package manager called [zinit](https://github.com/zdharma-continuum/zinit) which is going to be installed later on.
-```
-$ sudo apt-get install zsh 
-``` 
 
-Also, make sure `git` is installed.
-```
-$ sudo apt-get install git
-```
+### Terminal 
 
-### Install and Configure Nix's Package Manager 
-This is the meat and potatoes of this setup because it handles, almost, everything. Go over to [nix](https://nixos.org/download) anddownload the appropriate platform.
+#### Installation
+Download the .msi [file](https://github.com/alacritty/alacritty/releases/download/v0.15.1/Alacritty-v0.15.1-installer.msi) for windows.
 
-For WSL with `systemd` enabled
-```
-$ sh <(curl -L https://nixos.org/nix/install) --daemon
-```
+##### Footnote 
+There seems to be an [issue](https://www.reddit.com/r/tmux/comments/1fluve2/comment/lo61r4o/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+when using WSL2 in alacritty + tmux in windows. In order to fix this, you need to find the up-to-date `conpty.dll` and `OpenConsole.exe`. To do this, 
+simply install [wezterm](https://wezterm.org/), go to the installation directory, copy those two files and put it inside install folder of alacritty, remove wezterm.
 
-After executing that script, you will be prompted to continue the installation.
-After that was successfully installed, open a new terminal session (nix should be installed).
 
-Enable the experimental features of nix package manager
-```
-mkdir -p ~/.config/nix
-cd ~/.config/nix
-# This enables the experimental-features and also use all cores when building nix packages.
-echo "experimental-features = nix-command flakes\nmax-jobs = auto" >> nix.conf
-```
-### Add the appropriate Home Manager channel 
-for example this is the master or the unstable channel 
-```
-$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-$ nix-channel --update
-```
 
-### Install Home Manager
-```
-$ nix-shell '<home-manager>' -A install
-```
+### Package Manager
+For package management, `homebrew` is my choice.`homebrew` is simple, has a lot of up-to-date packages, easy to install and uninstall.
+Please go [here](https://brew.sh/) to read `homebrew`'s homepage.
 
-### Clone This Repository
-Clone this repository and rename the install directory whatever you like (i choose env).
-```
-git clone https://github.com/akbarilmnn/nix-dotfiles.git env/
-# go to env 
-cd env/
-# home-manager setup
-home-manager switch --flake .
+
+### Shell
+
+Currently i'm using `fish` shell in WSL. And i like to install `fish` from [source](https://github.com/fish-shell/fish-shell).
+The dependencies needed for `fish` are defined in the dependencies section.
+
+#### Installation
+Below are the steps to build fish from source
+
+```sh
+# Clone down fish repo
+git clone https://github.com/fish-shell/fish-shell
+# go into the locally installed repo
+cd fish-shell
+# build fish using `cargo` with `release` version to make it fast.
+cargo build --release
+# move the binary into your path.
+mv target/release/fish ~/.cargo/bin/
+# edit the `/etc/shells` file and add the path to your fish shell with your editor of choice
+sudo nano /etc/shells 
+# change your default shell into `fish` 
+chsh -s $(which fish)
+# restart your terimnal. and Done!
 ```
 
-close your shell and you are done.
+
+### Prompt
+
+Obviously, any shell with it's default prompt is not pleasing to my eye. So, let's install one. Currently `starship` is my go to prompt
+because it is very customizable. Please go [here](https://starship.rs/) to read `starship`'s homepage.
+
+#### Installation
+To install `starship` prompt, you can install it many ways, but im using `homebrew` just to be simple.
+```sh
+# make sure to update homebrew
+brew update
+
+# install starship prompt 
+brew install starship
+```
+
+or you can build it from source (because you hate yourself) using `cargo`
+
+```sh
+cargo install --locked starship
+```
+
+After installing starship, make sure to use the starship prompt when your shell starts up
+In the case of `fish` shell, add this line of code (usually at the end of the file) to your shell configuration file
+
+```fish
+starship init fish | source
+```
+
+The last part is to configure the prompt itself, you can customize it by visiting [here](https://starship.rs/config/).
+Navigate to the `starship` folder in this repository and copy the `starship.toml` file. After that, export STARSHIP_CONFIG
+environment variable with the path you put that toml file into your shell configuration. In the case of `fish`, please run:
+
+```fish
+set -gx STARSHIP_CONFIG="/path/to/config_file"
+```
+### Navigation
+Navigating around your terminal is a frequent task, it would be nice if the defualt `cd` command can have shortcuts and 
+fuzzy-finding all possible path you have been. Fortunately, there is [`zoxide`](https://github.com/ajeetdsouza/zoxide).
+
+#### Installation
+To install `zoxide` your can install using this command 
+
+```sh
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+```
+
+or using `homebrew`
+
+```sh
+brew install zoxide
+```
+
+or lastly install using `cargo`
+
+```sh
+cargo install --locked zoxide
+```
+It is recommended to install `fzf` alongside `zoxide` to increase `zoxide`'s functionality.
+
+After installing `zoxide` you need to activate it at startup in order to work. In the case of `fish` shell, add this line of code
+to your fish configuration file.
+
+```fish
+zoxide init fish | source
+```
+
+### Text Editor
+I'm Currently using `neovim` as my main text editor, because it's very customizable to suit your needs.
+
+#### Installation
+To install `neovim`, rather than installing it from source, you should install it via `homebrew`
+```sh
+brew install neovim
+```
+
+To tweak `neovim`, see EDITOR.md
+
+### CLI apps
+These are my currently installed CLI apps installed using `homebrew` and `cargo`
+
+#### HomeBrew CLI apps
+- `bat`
+- `btop`
+- `clipboard`
+- `cmake`
+- `dust`
+- `dysk`
+- `entr`
+- `eza`
+- `fd`
+- `fish`
+- `fzf`
+- `git`
+- `git-delta`
+- `hexyl`
+- `jq`
+- `lazygit`
+- `neovim`
+- `onefetch`
+- `procs`
+- `ripgrep`
+- `rm-improved`
+- `sd`
+- `serie`
+- `starship`
+- `tealdeer`
+- `tmux`
+- `tree`
+- `xh`
+- `yazi`
+- `zip`
+- `zoxide`
+
+#### Rust (cargo) CLI apps
+- `cargo-asm@0.2.49` 
