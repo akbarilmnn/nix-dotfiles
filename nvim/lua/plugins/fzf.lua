@@ -60,7 +60,7 @@ return {
 					prompt_prefix = "   ",
 					hidden = false,
 					theme = "dropdown",
-					selection_caret = "👉 ",
+					selection_caret = " ",
 				},
 				help_tags = minimal_opts,
 				builtin = minimal_opts,

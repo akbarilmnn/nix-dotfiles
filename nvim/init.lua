@@ -1,3 +1,5 @@
 require("config")
 require("maps")
+require("autocmds")
+require("lsp")
 require("packages")

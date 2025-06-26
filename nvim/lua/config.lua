@@ -1,19 +1,31 @@
 -- declare all
 local global_options = {
-	-- set map leader here before lazy loads...
+--	-- set map leader here before lazy loads...
 	mapleader = " ",
-	-- disable netrw at the very start of your init.lua
+--	-- disable netrw at the very start of your init.lua
 	leaded_netrw = 1,
 	loaded_netrwPlugin = 1,
-	clipboard = {
-		name = "WslClipboard",
+	--clipboard = {
+	--	name = "WslClipboard",
+	--	copy = {
+	--		["+"] = "clip.exe",
+	--		["*"] = "clip.exe",
+	--	},
+	--	paste = {
+	--		["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+	--		["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+	--	},
+	--	cache_enabled = 0,
+	--},
+    clipboard = {
+		name = "win32yank",
 		copy = {
-			["+"] = "clip.exe",
-			["*"] = "clip.exe",
+			["+"] = "win32yank.exe -i --crlf",
+			["*"] = "win32yank.exe -i --crlf",
 		},
 		paste = {
-			["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-			["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+			["+"] = 'win32yank.exe -o -lf',
+			["*"] = 'win32yank.exe -o -lf',
 		},
 		cache_enabled = 0,
 	},
@@ -68,6 +80,7 @@ local options = {
 	completeopt = { "menuone", "noselect", "menu" },
 
 	-- to make clipboard support possible (turns out i have to disable this in WSL2) see `:help cliboard.provider`
+    -- clipboard = "unnamedplus",
 
 	-- thanks to @tjdevries
 	laststatus = 3,

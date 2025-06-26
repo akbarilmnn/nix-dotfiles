@@ -1,76 +1,115 @@
 return {
-	"nvim-lualine/lualine.nvim",
-	dependencies = {
-		"rebelot/kanagawa.nvim",
-	},
-	config = function()
-		local colors = require("kanagawa.colors").setup()
-		local theme = colors.theme
-		require("lualine").setup({
-			options = {
-				theme = "auto",
-				component_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
-			},
-			sections = {
-				lualine_a = {
-					{
-						"mode",
-						fmt = function(str)
-							return str:sub(1, 3)
-						end,
-						color = { fg = theme.ui.fg, bg = theme.ui.bg },
-					},
-				},
-				lualine_b = {
-					{
-						"lsp_status",
-						icon = "󰅩",
-						color = { fg = theme.ui.fg, bg = theme.ui.bg },
-					},
-				},
-				lualine_c = {
-					{
-						"filetype",
-						color = { fg = theme.ui.fg, bg = theme.ui.bg },
-						icon_only = true,
-						icon = { align = "right" },
-					},
-					{
-						"filename",
-						path = 3,
-						color = { fg = theme.ui.fg, bg = theme.ui.bg },
-					},
-				},
-				lualine_x = {
-					{
-						"diagnostics",
-						always_visible = true,
-						color = { fg = theme.ui.fg, bg = theme.ui.bg },
-					},
-					{
-						"filetype",
-						icon_only = true,
-						icon = { align = "left" },
-						color = { fg = theme.ui.fg, bg = theme.ui.bg },
-					},
-				},
-				lualine_y = { "os.date('%a')", "data", "require'lsp-status'.status()" },
-				lualine_z = {
-					{
-						"location",
-						color = { fg = theme.ui.fg, bg = theme.ui.bg },
-					},
-				},
-			},
-			inactive_sections = {
-				lualine_a = {},
-				lualine_b = {},
-				lualine_c = {},
-				lualine_x = {},
-				lualine_y = {},
-				lualine_z = {},
-			},
-		})
-	end,
+    "nvim-lualine/lualine.nvim",
+    config = function()
+        require('lualine').setup {
+            options = {
+                icons_enabled = true,
+                theme = 'auto',
+                component_separators = { left = '', right = ''},
+                section_separators = { left = '', right = ''},
+                disabled_filetypes = {
+                    statusline = {},
+                    winbar = {},
+                },
+                ignore_focus = {},
+                always_divide_middle = true,
+                always_show_tabline = true,
+                globalstatus = false,
+                refresh = {
+                    statusline = 1000,
+                    tabline = 1000,
+                    winbar = 1000,
+                    refresh_time = 16, -- ~60fps
+                    events = {
+                        'WinEnter',
+                        'BufEnter',
+                        'BufWritePost',
+                        'SessionLoadPost',
+                        'FileChangedShellPost',
+                        'VimResized',
+                        'Filetype',
+                        'CursorMoved',
+                        'CursorMovedI',
+                        'ModeChanged',
+                    },
+                }
+            },
+            sections = {
+                -- lualine_a = {'mode'},
+                -- lualine_b = {'branch', 'diff', 'diagnostics'},
+                -- lualine_c = {'filename'},
+                -- lualine_x = {'encoding', 'fileformat', 'filetype'},
+                -- lualine_y = {'progress'},
+                -- lualine_z = {'location'}
+                lualine_a = {
+                    {
+                        'mode'
+                    },
+                    {
+                        'branch',
+                        icon = ""
+                    },
+                },
+                lualine_b = {
+                    {
+                        'diff',
+                        colored = true,
+                        symbols = {
+                            added = "󰷫 ",
+                            modified = "  ",
+                            removed = "󰷨 ",
+                        }
+                    }
+                },
+                lualine_c = {
+                    {
+                        'filename',
+                        file_status = true, 
+                        newfile_status = true,
+                        path = 3,
+                        symbols = {
+                            modified = '  ',      -- Text to show when the file is modified.
+                            readonly = '󰷊 ',      -- Text to show when the file is non-modifiable or readonly.
+                            unnamed = '󰡯 ', -- Text to show for unnamed buffers.
+                            newfile = '󰎜 ',     -- Text to show for newly created file before first write
+                        }
+                    },
+                },
+                lualine_x = {
+                    {
+                        "diagnostics",
+                        symbols = {
+                            error = ' ',
+                            warn = ' ',
+                            hint = ' ',
+                            info = '',
+                        }
+                    }
+                },
+                lualine_y = {
+                    {
+                        "lsp_status",
+                        icon = " "
+                    }
+                },
+                lualine_z = {
+                    {
+                        "location"
+                    }
+                }
+            },
+            inactive_sections = {
+                lualine_a = {},
+                lualine_b = {},
+                -- lualine_c = {'filename'},
+                -- lualine_x = {'location'},
+                lualine_y = {},
+                lualine_z = {}
+            },
+            tabline = {},
+            winbar = {},
+            inactive_winbar = {},
+            extensions = {}
+        }
+    end
 }
