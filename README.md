@@ -135,43 +135,43 @@ To install `neovim`, rather than installing it from source, you should install i
 brew install neovim
 ```
 
-To tweak `neovim`, see EDITOR.md
+To tweak `neovim`, see `EDITOR.md`
 
 ### CLI apps
 These are my currently installed CLI apps installed using `homebrew` and `cargo`
 
 #### HomeBrew CLI apps
-- `bat`
-- `btop`
-- `clipboard`
-- `cmake`
-- `dust`
-- `dysk`
-- `entr`
-- `eza`
-- `fd`
-- `fish`
-- `fzf`
-- `git`
-- `git-delta`
-- `hexyl`
-- `jq`
-- `lazygit`
-- `neovim`
-- `onefetch`
-- `procs`
-- `ripgrep`
-- `rm-improved`
-- `sd`
-- `serie`
-- `starship`
-- `tealdeer`
-- `tmux`
-- `tree`
-- `xh`
-- `yazi`
-- `zip`
-- `zoxide`
+- `bat`: Replacement for `cat` command with syntax highlighting and pager
+- `btop`: Pretty terminal based resource monitor 
+- `clipboard`: Clipboard manager
+- `cmake`: C/C++ build tool
+- `dust`: Tree-like disk usage visualizer
+- `dysk`: Pretty display of filesystems information
+- `entr`: Watch files and run commands when files change
+- `eza`: Replacement for `ls` command with icons and colors
+- `fd`: Replacement for `find` command with easier use
+- `fish`: Shell for your terminal
+- `fzf`: Fuzzy finder over all things
+- `git`: Version Control System
+- `git-delta`: Replacement for `git diff` with prettier output
+- `hexyl`: Terminal based hex editor
+- `jq`: Query json objects
+- `lazygit`: Terminal user interface for `git`
+- `neovim`: Terminal text editor
+- `onefetch`: `neofetch` alternative
+- `procs`: A prettier view to see running processes 
+- `ripgrep`: Replacement for `grep` command with easier use
+- `rm-improved`: Replacement for `rm` command with an undo command
+- `sd`: Replacement for `sed`command with easier use
+- `serie`: A prettier view too see git commits 
+- `starship`: Customizable shell prompt
+- `tealdeer`: summarize what a command can do
+- `tmux`: terminal multiplexer (run multiple terminal sessions in one terminal window)
+- `tree`: tree-like visualization of a filesystem
+- `xh`: User-friendly Terminal HTTP client
+- `yazi`: Terminal file manager
+- `zip`: Compress multiple files into an archive 
+- `zoxide`: Replacement for `cd` command with easier use
 
 #### Rust (cargo) CLI apps
-- `cargo-asm@0.2.49` 
+- `cargo-asm@0.2.49`: show assembly output of a given function
