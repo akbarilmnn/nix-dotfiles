@@ -5,8 +5,8 @@ return {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''},
+                component_separators = { left = '', right = '' },
+                section_separators = { left = '', right = '' },
                 disabled_filetypes = {
                     statusline = {},
                     winbar = {},
@@ -64,14 +64,14 @@ return {
                 lualine_c = {
                     {
                         'filename',
-                        file_status = true, 
+                        file_status = true,
                         newfile_status = true,
                         path = 3,
                         symbols = {
-                            modified = '  ',      -- Text to show when the file is modified.
-                            readonly = '󰷊 ',      -- Text to show when the file is non-modifiable or readonly.
+                            modified = '  ', -- Text to show when the file is modified.
+                            readonly = '󰷊 ', -- Text to show when the file is non-modifiable or readonly.
                             unnamed = '󰡯 ', -- Text to show for unnamed buffers.
-                            newfile = '󰎜 ',     -- Text to show for newly created file before first write
+                            newfile = '󰎜 ', -- Text to show for newly created file before first write
                         }
                     },
                 },

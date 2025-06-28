@@ -141,6 +141,7 @@ To tweak `neovim`, see `EDITOR.md`
 These are my currently installed CLI apps installed using `homebrew` and `cargo`
 
 #### HomeBrew CLI apps
+- `atuin`: improved searching commands in your shell
 - `bat`: Replacement for `cat` command with syntax highlighting and pager
 - `btop`: Pretty terminal based resource monitor 
 - `clipboard`: Clipboard manager
@@ -152,8 +153,8 @@ These are my currently installed CLI apps installed using `homebrew` and `cargo`
 - `fd`: Replacement for `find` command with easier use
 - `fish`: Shell for your terminal
 - `fzf`: Fuzzy finder over all things
-- `git`: Version Control System
 - `git-delta`: Replacement for `git diff` with prettier output
+- `git`: Version Control System
 - `hexyl`: Terminal based hex editor
 - `jq`: Query json objects
 - `lazygit`: Terminal user interface for `git`

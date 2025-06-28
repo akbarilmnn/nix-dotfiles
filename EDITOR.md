@@ -9,7 +9,12 @@ Anyways, this the file structure for my neovim setup.
 ├── init.lua # sets up all components
 ├── lazy-lock.json # lockfile to lock plugin versions
 ├── lsp # directory to configure each language server installed
-│   └── lua_ls.lua
+│   ├── lua_ls.lua
+│   ├── zls.lua
+│   ├── ruff.lua
+│   ├── pyright.lua
+│   ├── clangd.lua
+│   └── denols.lua
 └── lua # directory that contains components (keymappings, basic settings, auto-commands, plugins) for my config
     ├── autocmds.lua # functions that runs when an event happens 
     ├── colorschemes.lua # all availables colorscheme names installed
