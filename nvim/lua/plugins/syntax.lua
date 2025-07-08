@@ -30,6 +30,7 @@ return {
 				-- warning from noice.nvim
 				"regex",
 				"bash",
+				"dockerfile",
 			},
 			highlight = {
 				enable = true,

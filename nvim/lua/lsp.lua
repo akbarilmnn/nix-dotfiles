@@ -5,13 +5,14 @@ vim.lsp.enable({
     "jdtls",
     "pyright",
     "ruff",
-    "zls"
+    "zls",
+    "html",
 })
 
 vim.diagnostic.config({
     -- the UI looks cool but it a bit hard to read.
-    virtual_lines = true,
-    virtual_text = false,
+    --virtual_lines = true,
+    virtual_text = true,
     -- virtual_text = true,
     underline = true,
     update_in_insert = true,
