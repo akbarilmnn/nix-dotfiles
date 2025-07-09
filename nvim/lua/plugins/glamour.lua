@@ -26,5 +26,12 @@ return {
     dependencies = {
         "MunifTanjim/nui.nvim",
         "rcarriga/nvim-notify",
+        {
+            "karb94/neoscroll.nvim",
+            opts = {
+                duration_multiplier = 0.5,
+                performance_mode = true,
+            }
+        }
     }
 }

@@ -10,6 +10,9 @@ Anyways, this the file structure for my neovim setup.
 ├── lazy-lock.json # lockfile to lock plugin versions
 ├── lsp # directory to configure each language server installed
 │   ├── lua_ls.lua
+│   ├── cssls.lua
+│   ├── emmet_language_server.lua
+│   ├── gopls.lua
 │   ├── zls.lua
 │   ├── ruff.lua
 │   ├── pyright.lua
@@ -35,5 +38,7 @@ Anyways, this the file structure for my neovim setup.
     │   ├── markdown.lua # setup for rendering markdown files inside `neovim`
     │   ├── statusline.lua # setup for statusbar
     │   ├── syntax.lua # setup for syntax highlighting
+    │   ├── tmuxnav.lua # setup for vim-like tmux window navigation
+    │   ├── transparent.lua # setup for transparent UI completion in neovim
     │   └── theme.lua # setup for colorscheme picker that is defined in `colorschemes.lua`
 ```

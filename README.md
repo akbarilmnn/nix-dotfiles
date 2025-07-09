@@ -6,29 +6,7 @@ WIP (always).
 ## Tools 
 
 ### OS 
-I'm curently using `windows` as my daily driver operating system. But when i code, i use `WSL` 
-
-#### Installation
-Head over to [microsoft's site](https://learn.microsoft.com/en-us/windows/wsl/install) and install WSL.
-
-#### Update Packages 
-After installation, please update your package repository and your system as well.
-```
-$ sudo apt-get update -y && sudo apt-get upgrade -y
-```
-
-
-### Terminal 
-
-#### Installation
-Download the .msi [file](https://github.com/alacritty/alacritty/releases/download/v0.15.1/Alacritty-v0.15.1-installer.msi) for windows.
-
-##### Footnote 
-There seems to be an [issue](https://www.reddit.com/r/tmux/comments/1fluve2/comment/lo61r4o/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
-when using WSL2 in alacritty + tmux in windows. In order to fix this, you need to find the up-to-date `conpty.dll` and `OpenConsole.exe`. To do this, 
-simply install [wezterm](https://wezterm.org/), go to the installation directory, copy those two files and put it inside install folder of alacritty, remove wezterm.
-
-
+I'm curently using `MacOS` as my daily driver operating system 
 
 ### Package Manager
 For package management, `homebrew` is my choice.`homebrew` is simple, has a lot of up-to-date packages, easy to install and uninstall.
@@ -137,14 +115,37 @@ brew install neovim
 
 To tweak `neovim`, see `EDITOR.md`
 
+### GUI apps
+
+These are my currently installed GUI apps on MacOS from `homebrew`, `.dmg` files and `.pkg` files 
+
+- `alacritty`: Fast GPU-accelerated terminal emulator 
+- `aldente`: battery limiter/optimization app
+- `DaVinci Resolve`: video editor
+- `Docker Desktop`: GUI app for managing `docker` containers
+- `Raycast`: `spotlight` search on steroids
+- `discord`: chat app + hanging out
+- `WhatsApp`: chat app
+- `zoom`: meetings 
+- `dropover`: free `yoink` alternative in MacOS. Basically a shelf where dragged files reside
+- `KeyCastr`: add overlay whenever a certain or any key is pressed
+- `LocalSend`: send files via Wi-Fi 
+- `PearCleaner`: clean files fully
+- `protonVPN`: fast free VPN that offers a range of servers
+- `vanilla`: hide menu bar icons in MacOS
+- `vlc`: verstile media player
+- `zed`: lightweight, fast, customizable GUI text editor
+- `zen`: aesthetically pleasing modern browser based on `firefox`
+
 ### CLI apps
+
 These are my currently installed CLI apps installed using `homebrew` and `cargo`
 
 #### HomeBrew CLI apps
 - `atuin`: improved searching commands in your shell
 - `bat`: Replacement for `cat` command with syntax highlighting and pager
 - `btop`: Pretty terminal based resource monitor 
-- `clipboard`: Clipboard manager
+- `clipboard`: Clipboard manager (Not really used, because there are native MacOS clipboard manager)
 - `cmake`: C/C++ build tool
 - `dust`: Tree-like disk usage visualizer
 - `dysk`: Pretty display of filesystems information

@@ -1,0 +1,1 @@
+source "/Users/muhammadakbarilmansetijadi/.deno/env.fish"
