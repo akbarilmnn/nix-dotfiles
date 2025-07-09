@@ -1,10 +1,11 @@
 -- declare all
 local global_options = {
---	-- set map leader here before lazy loads...
+	--	-- set map leader here before lazy loads...
 	mapleader = " ",
---	-- disable netrw at the very start of your init.lua
+	--	-- disable netrw at the very start of your init.lua
 	leaded_netrw = 1,
 	loaded_netrwPlugin = 1,
+	-- for WSL2
 	--clipboard = {
 	--	name = "WslClipboard",
 	--	copy = {
@@ -17,25 +18,31 @@ local global_options = {
 	--	},
 	--	cache_enabled = 0,
 	--},
-    clipboard = {
-		name = "win32yank",
-		copy = {
-			["+"] = "win32yank.exe -i --crlf",
-			["*"] = "win32yank.exe -i --crlf",
-		},
-		paste = {
-			["+"] = 'win32yank.exe -o -lf',
-			["*"] = 'win32yank.exe -o -lf',
-		},
-		cache_enabled = 0,
-	},
+	--clipboard = {
+	--	name = "win32yank",
+	--	copy = {
+	--		["+"] = "win32yank.exe -i --crlf",
+	--		["*"] = "win32yank.exe -i --crlf",
+	--	},
+	--	paste = {
+	--		["+"] = 'win32yank.exe -o -lf',
+	--		["*"] = 'win32yank.exe -o -lf',
+	--	},
+	--	cache_enabled = 0,
+	--},
 }
+
+-- Undercurl
+vim.cmd([[let &t_Cs = "\e[4:3m"]])
+vim.cmd([[let &t_Ce = "\e[4:0m"]])
 
 for key, value in pairs(global_options) do
 	vim.g[key] = value
 end
 
 local options = {
+	spell = true,
+	spelllang = { "en_us" },
 	cursorline = true,
 	-- Set line numbers.
 	nu = true,
@@ -80,7 +87,7 @@ local options = {
 	completeopt = { "menuone", "noselect", "menu" },
 
 	-- to make clipboard support possible (turns out i have to disable this in WSL2) see `:help cliboard.provider`
-    -- clipboard = "unnamedplus",
+	-- clipboard = "unnamedplus",
 
 	-- thanks to @tjdevries
 	laststatus = 3,

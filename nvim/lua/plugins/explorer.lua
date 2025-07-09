@@ -4,5 +4,13 @@ return {
 	keys = {
 		{ "<leader>-", "<cmd>Oil --float<cr>", desc = "Open file explorer" },
 	},
-	opts = {},
+	config = function()
+		require("oil").setup({
+			float = {
+				win_options = {
+					winblend = 0
+				}
+			}
+		})
+	end,
 }
