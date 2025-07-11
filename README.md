@@ -145,16 +145,18 @@ These are my currently installed CLI apps installed using `homebrew` and `cargo`
 - `atuin`: improved searching commands in your shell
 - `bat`: Replacement for `cat` command with syntax highlighting and pager
 - `btop`: Pretty terminal based resource monitor 
+- `cairo`: libarary to render font (used for creating animation using `manim`)
 - `clipboard`: Clipboard manager (Not really used, because there are native MacOS clipboard manager)
 - `cmake`: C/C++ build tool
 - `dust`: Tree-like disk usage visualizer
-- `dysk`: Pretty display of filesystems information
+- `dysk`: Pretty display of filesystems information. (for linux only)
 - `entr`: Watch files and run commands when files change
 - `eza`: Replacement for `ls` command with icons and colors
 - `fd`: Replacement for `find` command with easier use
 - `fish`: Shell for your terminal
 - `fzf`: Fuzzy finder over all things
 - `git-delta`: Replacement for `git diff` with prettier output
+- `gum`: A tool to make glamorous shell scripts
 - `git`: Version Control System
 - `hexyl`: Terminal based hex editor
 - `jq`: Query json objects
@@ -164,7 +166,8 @@ These are my currently installed CLI apps installed using `homebrew` and `cargo`
 - `procs`: A prettier view to see running processes 
 - `ripgrep`: Replacement for `grep` command with easier use
 - `rm-improved`: Replacement for `rm` command with an undo command
-- `sd`: Replacement for `sed`command with easier use
+- `stow`: Symlink dotfiles to target directory
+- `sd`: Replacement for `sed` command with easier use
 - `serie`: A prettier view too see git commits 
 - `starship`: Customizable shell prompt
 - `tealdeer`: summarize what a command can do
@@ -177,3 +180,20 @@ These are my currently installed CLI apps installed using `homebrew` and `cargo`
 
 #### Rust (cargo) CLI apps
 - `cargo-asm@0.2.49`: show assembly output of a given function
+
+## Setup
+
+Make sure you have `brew` installed in order to install all development tools.
+
+From the root directory of this repository, run this command to install all things in the `Brewfile`.
+
+```sh
+brew bundle install --file=Brewfile
+```
+
+After that, use `stow` to symlink all dotfiles to the preffered direcotry (i like to put it on my `~/.config` directory) by running this command.
+
+```sh
+stow --dir . --target ~/.config
+
+```
