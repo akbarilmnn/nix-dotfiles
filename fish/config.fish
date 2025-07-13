@@ -21,7 +21,8 @@ if status is-interactive
 
     # Commands to run in interactive sessions can go here
     set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
-    set -x EDITOR nvim
+    set -x EDITOR "nvim"
+    set -Ux TERM "alacritty"
     fish_add_path ~/.local/manual/zig/bin/
 
     # `fish_greeting` is the command

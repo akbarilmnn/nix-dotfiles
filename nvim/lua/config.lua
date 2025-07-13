@@ -33,16 +33,14 @@ local global_options = {
 }
 
 -- Undercurl
-vim.cmd([[let &t_Cs = "\e[4:3m"]])
-vim.cmd([[let &t_Ce = "\e[4:0m"]])
+-- vim.cmd([[let &t_Cs = "\e[4:3m"]])
+-- vim.cmd([[let &t_Ce = "\e[4:0m"]])
 
 for key, value in pairs(global_options) do
 	vim.g[key] = value
 end
 
 local options = {
-	spell = true,
-	spelllang = { "en_us" },
 	cursorline = true,
 	-- Set line numbers.
 	nu = true,

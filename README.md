@@ -202,3 +202,20 @@ would cause a conflict. if you use the `--adopt` flag, the contents of `~/cloned
 stow --dir . --target ~/.config
 ```
 
+## Miscellaneous
+
+if you want to properly enable undercurl in `alacritty`, make sure you download into [`alacritty terminfo file`](https://github.com/alacritty/alacritty/blob/master/extra/alacritty.info)
+enable the terminfo file using this command.
+
+```sh 
+tic -xe alacritty,alacritty-direct extra/alacritty.info
+```
+
+set the `$TERM` environment variable in your shell into alacritty 
+
+also disable spellcheck in neovim.
+
+```lua
+vim.opt.spell = false
+
+```
