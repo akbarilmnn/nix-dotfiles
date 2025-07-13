@@ -192,8 +192,13 @@ brew bundle install --file=Brewfile
 ```
 
 After that, use `stow` to symlink all dotfiles to the preffered direcotry (i like to put it on my `~/.config` directory) by running this command.
+make sure the target directory is empty or is there is no conflict of files i.e in your current `~/.config` directory, make sure there
+is not a single file or directory that has the same name. If there is a conflict, you either have to delete that conflicted file/directory or
+if you think the current file is better, you should add the `--adopt` flag in `stow`. for example, if there is a file in `~/.config/foo` 
+and you have another version of `foo` in the cloned repo `~/cloned-dotfiles/foo`. When you are stowing `~/cloned-dotfiles/foo` into `~/.config/foo` 
+would cause a conflict. if you use the `--adopt` flag, the contents of `~/cloned-dotfiles/foo` will be overwritten to what is inside `~/.config/foo`
 
 ```sh
 stow --dir . --target ~/.config
-
 ```
+

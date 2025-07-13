@@ -16,6 +16,8 @@ if status is-interactive
     alias ls="eza --icons --tree --level 1"
     alias vlc="open -a VLC"
     alias la="eza -lah --icons --tree --level 1"
+    alias cat="bat"
+    alias rm="rip"
 
     # Commands to run in interactive sessions can go here
     set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
