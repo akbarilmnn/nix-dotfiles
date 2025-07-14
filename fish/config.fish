@@ -18,6 +18,7 @@ if status is-interactive
     alias la="eza -lah --icons --tree --level 1"
     alias cat="bat"
     alias rm="rip"
+    alias python="python3"
 
     # Commands to run in interactive sessions can go here
     set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
