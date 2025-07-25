@@ -19,6 +19,8 @@ if status is-interactive
     alias cat="bat"
     alias rm="rip"
     alias python="python3"
+    alias sysupdate="brew update && brew upgrade"
+    alias tns="tmux new-session -s"
 
     # Commands to run in interactive sessions can go here
     set -x STARSHIP_CONFIG ~/.config/starship/starship.toml

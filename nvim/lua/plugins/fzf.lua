@@ -51,6 +51,12 @@ return {
 			"<cmd>Telescope keymaps<cr>",
 			desc = "list keymaps",
 		},
+		{
+			"<leader>ds",
+			mode = { "n" },
+			"<cmd>Telescope diagnostics<cr>",
+			desc = "fuzzy find diagnostics"
+		}
 	},
 	config = function()
 		local minimal_opts = { theme = "dropdown", previewer = false, prompt_prefix = "  " }
