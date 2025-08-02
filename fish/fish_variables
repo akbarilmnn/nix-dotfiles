@@ -1,5 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export JAVA_HOME:/Applications/Android\x20Studio\x2eapp/Contents/jbr/Contents/Home
 SETUVAR --export TERM:alacritty
 SETUVAR __fish_initialized:3800
 SETUVAR fish_color_autosuggestion:brblack

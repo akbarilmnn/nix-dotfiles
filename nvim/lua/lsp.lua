@@ -7,6 +7,8 @@ vim.lsp.enable({
     "ruff",
     "zls",
     "html",
+    "tailwindcss",
+    "rust_analyzer"
 })
 
 vim.diagnostic.config({

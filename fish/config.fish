@@ -26,6 +26,7 @@ if status is-interactive
     set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
     set -x EDITOR "nvim"
     set -Ux TERM "alacritty"
+    set -Ux JAVA_HOME "/Applications/Android Studio.app/Contents/jbr/Contents/Home"
     fish_add_path ~/.local/manual/zig/bin/
 
     # `fish_greeting` is the command
