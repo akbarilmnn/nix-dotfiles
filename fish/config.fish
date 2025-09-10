@@ -22,24 +22,33 @@ if status is-interactive
     alias sysupdate="brew update && brew upgrade"
     alias tns="tmux new-session -s"
 
-    # Commands to run in interactive sessions can go here
-    set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
-    set -x EDITOR "nvim"
-    set -Ux TERM "alacritty"
-    set -Ux JAVA_HOME "/Applications/Android Studio.app/Contents/jbr/Contents/Home"
-    fish_add_path ~/.local/manual/zig/bin/
+    function last_history_item; echo $history[1]; end
+        abbr -a !! --position anywhere --function last_history_item
+        # Commands to run in interactive sessions can go here
+        set -x STARSHIP_CONFIG ~/.config/starship/starship.toml
+        set -x EDITOR "nvim"
+        set -Ux TERM "alacritty"
+        set -Ux JAVA_HOME "/Applications/Android Studio.app/Contents/jbr/Contents/Home"
 
-    # `fish_greeting` is the command
-    function fish_greeting
-        clear
+        set -gx LDFLAGS "-L/opt/homebrew/opt/postgresql@16/lib"
+        set -gx CPPFLAGS "-I/opt/homebrew/opt/postgresql@16/include"
+        set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/postgresql@16/lib/pkgconfig"
+
+        fish_add_path ~/.local/manual/zig/bin/
+        fish_add_path /opt/homebrew/opt/postgresql@16/bin
+        fish_add_path /Applications/WezTerm.app/Contents/MacOS
+
+        # `fish_greeting` is the command
+        function fish_greeting
+            clear
+        end
+
+        # file to `source` used for `cargo` 
+        source "$HOME/.cargo/env.fish"
+        # initialize `starship` with configuration tailored to `fish` shell
+        starship init fish | source
+        # initialize `zoxide` with configuration tailored to `fish` shell
+        zoxide init fish | source
+        # initialize `atuin` with configuration tailored to `fish` shell
+        atuin init fish | source
     end
-
-    # file to `source` used for `cargo` 
-    source "$HOME/.cargo/env.fish"
-    # initialize `starship` with configuration tailored to `fish` shell
-    starship init fish | source
-    # initialize `zoxide` with configuration tailored to `fish` shell
-    zoxide init fish | source
-    # initialize `atuin` with configuration tailored to `fish` shell
-    atuin init fish | source
-end

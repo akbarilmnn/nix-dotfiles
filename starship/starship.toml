@@ -1,10 +1,11 @@
 # display on prompt
+
 format = '''
-[#](#00c7bc)[\[](#00c7bc)$username$hostname $directory[\]](#00c7bc) 
+$username$hostname $directory [|](#FE5F57) 
 '''
 
 right_format = '''
-$git_branch$git_status
+$git_branch
 '''
 
 # do not insert new line after pressing enter.
@@ -14,18 +15,18 @@ add_newline = false
 success_symbol = '[\$](cyan)'
 
 [hostname]
-format = '[$hostname](#25d366)'
+format = '[$hostname](#AFA9A3)'
 ssh_only = false
 
 [username]
-format = '[$user](yellow)[@](#e33e30)'
+format = '[$user](#CAB062)[@](#7F8B89)'
 show_always = true
 
 [directory]
-format = '[$path](#f170ed)'
+format = '[$path](#CAB062)'
 fish_style_pwd_dir_length = 1
 
 [git_branch]
 symbol = ' '
-format = ' [$symbol](#ff6ca6)[$branch](#12c00d) '
+format = ' [$symbol](#ff6ca6)[$branch](#A8B665) '
 

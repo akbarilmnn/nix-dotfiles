@@ -19,16 +19,3 @@ vi_mode_style = { shape = "Block", blinking = "Never" }
 
 [mouse]
 hide_when_typing = true 
-
-[keyboard]
-
-[[keyboard.bindings]]
-key = "N"
-mods = "Command"
-action = "None"
-
-[[keyboard.bindings]]
-key = "B"
-mods = "Alt"
-chars = "\\u001bb"
-

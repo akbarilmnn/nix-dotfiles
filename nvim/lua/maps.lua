@@ -16,6 +16,7 @@ set_keymap("n", "<leader>v", "<C-v>", "short to go to visual mode")
 set_keymap("n", "<leader>e", "<cmd>q!<cr>", "shortcut to quit without saving anything")
 set_keymap("n", "<M-n>", "<cmd>cnext<cr>", "go to next quickfix list item")
 set_keymap("n", "<M-p>", "<cmd>cprevious<cr>", "go to previous quickfix list item")
+set_keymap("n", "<M-x>", "<cmd>cclose<cr>", "close quickfix list")
 set_keymap("n", "<leader>p", "<cmd>bprevious<cr>", "go to the previous buffer")
 set_keymap("n", "<leader>x", "<cmd>bwipeout<cr>", "close buffer")
 -- go to insert mode easily
