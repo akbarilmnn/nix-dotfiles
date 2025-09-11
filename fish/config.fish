@@ -20,7 +20,11 @@ if status is-interactive
     alias rm="rip"
     alias python="python3"
     alias sysupdate="brew update && brew upgrade"
-    alias tns="tmux new-session -s"
+
+    function tns
+        set session_name (gum input --placeholder="Tmux Session Name:")
+        tmux new-session -s $session_name
+    end
 
     function last_history_item; echo $history[1]; end
         abbr -a !! --position anywhere --function last_history_item
