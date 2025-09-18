@@ -1,7 +1,11 @@
 return {
-    'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    config = true,
-    -- use opts = {} for passing setup options
-    -- this is equivalent to setup({}) function
+	"m4xshen/autoclose.nvim",
+	config = function()
+		require("autoclose").setup({
+			keys = {
+				-- cs as in c#
+				["<"] = { escape = false, close = true, pair = "<>", enabled_filetypes = { "rust", "cpp", "java", "typescript", "cs"} }
+			},
+		})
+	end
 }

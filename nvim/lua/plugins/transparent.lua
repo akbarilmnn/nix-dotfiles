@@ -3,6 +3,6 @@ return {
     event = 'VimEnter',
     opts = {
         auto = true,
-        extra_groups = { 'Pmenu', 'PmenuExtra', 'PmenuThumb', 'BlinkCmpScrollBarThumb', 'BlinkCmpScrollBarGutter', 'Normal', 'NormalFloat', 'FloatBorder' }
+        extra_groups = { 'Pmenu', 'PmenuExtra', 'Normal', 'NormalFloat', 'FloatBorder' }
     }
 }
